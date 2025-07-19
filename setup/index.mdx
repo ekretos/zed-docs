@@ -1,0 +1,443 @@
+# Setup & Configuration
+
+Get ZeroDegree up and running in your Discord server with this comprehensive setup guide. From basic installation to advanced configuration, we'll help you unlock the full potential of your server management.
+
+## Quick Start
+
+### 1. Invite ZeroDegree
+
+Click the invite link below to add ZeroDegree to your server:
+
+**[🤖 Invite ZeroDegree to Your Server](invite-link)**
+
+**Recommended Permissions:**
+- Administrator (for full functionality)
+- Or select specific permissions based on features you'll use
+
+### 2. First Steps
+
+Once ZeroDegree joins your server:
+
+```
+/help
+```
+
+This will show you all available commands and features.
+
+### 3. Essential Configuration
+
+Start with these core commands:
+
+```
+/welcome          # Set up member welcoming
+/automod          # Configure content filtering
+/language set     # Set your preferred language
+```
+
+---
+
+## Detailed Setup Process
+
+### Step 1: Server Preparation
+
+**Before inviting ZeroDegree:**
+
+1. **Plan Your Setup**
+   - Decide which features you need
+   - Identify required channels
+   - Plan role structure
+   - Consider moderation workflows
+
+2. **Create Necessary Channels**
+   - Moderation log channel
+   - Welcome channel
+   - Giveaway channel
+   - Auto-mod alerts channel
+
+3. **Review Current Permissions**
+   - Check existing bot permissions
+   - Identify potential conflicts
+   - Plan role hierarchy
+
+### Step 2: Bot Invitation
+
+**Invitation Process:**
+
+1. Click the official invite link
+2. Select your server from dropdown
+3. Review and grant permissions
+4. Complete Discord's authorization
+5. Verify bot appears in member list
+
+**Permission Requirements:**
+
+| Feature | Required Permissions |
+|---------|---------------------|
+| Basic Commands | Send Messages, View Channels |
+| Moderation | Ban Members, Kick Members, Manage Messages |
+| Role Management | Manage Roles |
+| Channel Management | Manage Channels |
+| Voice Features | Move Members, Mute Members |
+| Anti-Nuke | Administrator (recommended) |
+
+### Step 3: Initial Configuration
+
+**Essential Setup Commands:**
+
+#### 1. Language Configuration
+```
+/language set language:en
+```
+*Set to your preferred language (en, fr, de, es, pt)*
+
+#### 2. Welcome System Setup
+```
+/welcome
+```
+*Follow the interactive setup to configure:*
+- Welcome channel
+- Welcome message
+- Auto-roles
+- Direct messages
+
+#### 3. Auto-Moderation Setup
+```
+/automod
+```
+*Configure automated content filtering:*
+- Link filtering
+- Mention spam protection
+- Bad words filtering
+- Join gate verification
+
+#### 4. Anti-Nuke Protection
+```
+/antinuke channel channel:#mod-logs
+/antinuke punishments action:ban
+/enable
+```
+
+### Step 4: Feature Customization
+
+**Advanced Features:**
+
+#### Custom Embeds
+```
+/embed create name:"Server Info" description:"Information panel"
+```
+
+#### Giveaway System
+```
+/giveaway start channel:#giveaways time:"1h" winners:1 prize:"Discord Nitro"
+```
+
+#### Join-to-Create Channels
+```
+/jointocreate setup category:"Voice Channels" channel_name:"{user}'s Room"
+```
+
+#### Tag System
+```
+/tag create name:"rules" content:"Please read our server rules!"
+```
+
+---
+
+## Configuration Checklist
+
+### ✅ Essential Setup
+
+- [ ] Bot successfully invited and online
+- [ ] Basic permissions granted
+- [ ] Language configured
+- [ ] Help command tested
+
+### ✅ Core Features
+
+- [ ] Welcome system configured
+- [ ] Moderation log channel set
+- [ ] Auto-moderation enabled
+- [ ] Anti-nuke protection active
+
+### ✅ Advanced Features
+
+- [ ] Custom embeds created
+- [ ] Giveaway system tested
+- [ ] Tag system configured
+- [ ] Join-to-create set up
+
+### ✅ Security & Permissions
+
+- [ ] Role hierarchy reviewed
+- [ ] Permission audit completed
+- [ ] Whitelist configured (if needed)
+- [ ] Backup plan established
+
+---
+
+## Common Configuration Scenarios
+
+### Small Community Server (< 100 members)
+
+**Recommended Setup:**
+```
+# Basic welcome
+/welcome
+# Light auto-moderation
+/automod
+# Simple giveaway capability
+/giveaway start channel:#general time:"1h" winners:1 prize:"Server Boost"
+```
+
+**Focus Areas:**
+- Simple welcome messages
+- Basic content filtering
+- Manual moderation support
+- Community engagement tools
+
+### Medium Server (100-1000 members)
+
+**Recommended Setup:**
+```
+# Comprehensive welcome
+/welcome
+# Full auto-moderation
+/automod
+# Anti-nuke protection
+/enable
+# Custom embeds for info
+/embed create name:"Server Rules"
+```
+
+**Focus Areas:**
+- Automated moderation
+- Role assignment systems
+- Strike tracking
+- Advanced welcome flows
+
+### Large Server (1000+ members)
+
+**Recommended Setup:**
+```
+# Full system configuration
+/welcome
+/automod
+/enable
+/antinuke channel channel:#security-logs
+# Premium features
+/premium status
+```
+
+**Focus Areas:**
+- Advanced security measures
+- Scalable automation
+- Premium features
+- Performance optimization
+
+### Gaming Community
+
+**Specialized Setup:**
+```
+# Gaming-focused features
+/jointocreate setup category:"Game Rooms" channel_name:"{user}'s Game"
+/embed create name:"LFG Panel" description:"Looking for Group"
+/tag create name:"lfg" content:"Looking for group members!"
+```
+
+**Focus Areas:**
+- Voice channel management
+- Game-specific roles
+- Tournament systems
+- Community events
+
+---
+
+## Best Practices
+
+### Security Configuration
+
+**Anti-Nuke Setup:**
+1. Enable before granting sensitive permissions
+2. Whitelist trusted administrators
+3. Set appropriate punishment levels
+4. Monitor security logs regularly
+5. Review whitelist monthly
+
+**Permission Management:**
+1. Follow principle of least privilege
+2. Regular permission audits
+3. Role hierarchy planning
+4. Bot permission reviews
+5. Emergency access procedures
+
+### Performance Optimization
+
+**Response Time:**
+- Use specific channels for high-traffic commands
+- Implement command cooldowns where appropriate
+- Monitor bot performance with `/ping`
+- Regular cache clearing
+- Database optimization
+
+**Resource Management:**
+- Limit embed complexity
+- Optimize auto-mod rules
+- Regular data cleanup
+- Monitor memory usage
+- Scale resources as needed
+
+### User Experience
+
+**Command Accessibility:**
+- Consistent command naming
+- Clear help documentation
+- User-friendly error messages
+- Intuitive permission structure
+- Regular feature announcements
+
+**Training and Onboarding:**
+- Staff training on bot features
+- Member education on available commands
+- Regular feature highlights
+- Documentation updates
+- Community feedback integration
+
+---
+
+## Migration from Other Bots
+
+### Pre-Migration Planning
+
+**Data Assessment:**
+1. List current bot features in use
+2. Identify equivalent ZeroDegree features
+3. Plan transition timeline
+4. Backup current configurations
+5. Communicate changes to community
+
+**Feature Mapping:**
+
+| Common Bot | ZeroDegree Equivalent |
+|------------|----------------------|
+| Carl-bot Tags | `/tag` system |
+| Dyno Automod | `/automod` system |
+| MEE6 Leveling | Custom embed panels |
+| Ticket Tool | Embed-based tickets |
+
+### Migration Process
+
+**Phase 1: Parallel Setup**
+1. Invite ZeroDegree alongside existing bots
+2. Configure core features
+3. Test functionality thoroughly
+4. Train staff on new commands
+5. Gather user feedback
+
+**Phase 2: Feature Transition**
+1. Migrate one feature at a time
+2. Update documentation
+3. Retrain users gradually
+4. Monitor for issues
+5. Adjust configurations
+
+**Phase 3: Full Migration**
+1. Disable old bot features
+2. Remove unnecessary bots
+3. Final configuration adjustments
+4. Complete staff training
+5. Community announcement
+
+### Data Transfer
+
+**Transferable Data:**
+- Custom messages and embeds
+- Role assignment rules
+- Moderation settings
+- Channel configurations
+- User preferences
+
+**Manual Recreation:**
+- Complex automation rules
+- Custom command responses
+- Specific permission setups
+- Integration configurations
+- Advanced workflows
+
+---
+
+## Troubleshooting Setup Issues
+
+### Common Problems
+
+#### Bot Not Responding
+**Symptoms:** Commands don't work, no response from bot
+**Solutions:**
+1. Check bot online status
+2. Verify permissions
+3. Try in different channel
+4. Check for Discord outages
+5. Contact support
+
+#### Permission Errors
+**Symptoms:** "Missing permissions" errors
+**Solutions:**
+1. Review bot role position
+2. Check specific command permissions
+3. Verify channel-specific permissions
+4. Update role hierarchy
+5. Re-invite with proper permissions
+
+#### Feature Not Working
+**Symptoms:** Specific features don't function
+**Solutions:**
+1. Check feature-specific permissions
+2. Verify configuration completeness
+3. Test in isolation
+4. Review error messages
+5. Consult documentation
+
+#### Configuration Lost
+**Symptoms:** Settings reset or missing
+**Solutions:**
+1. Check for recent permission changes
+2. Verify bot role integrity
+3. Review audit logs
+4. Restore from backup
+5. Reconfigure from scratch
+
+### Getting Help
+
+**Self-Service:**
+1. Check this documentation
+2. Use `/help` for command info
+3. Test in development server
+4. Review error messages
+5. Search support forums
+
+**Community Support:**
+1. Join support server
+2. Ask in help channels
+3. Search previous questions
+4. Provide detailed information
+5. Follow up on solutions
+
+**Direct Support:**
+1. Premium support channels
+2. Bug report system
+3. Feature request platform
+4. Emergency contacts
+5. Escalation procedures
+
+---
+
+## Next Steps
+
+After completing the basic setup:
+
+1. **[Explore Advanced Features](/features)** - Dive deeper into specific capabilities
+2. **[Read Command Documentation](/commands)** - Learn detailed command usage
+3. **[Join Support Community](support-link)** - Connect with other users
+4. **[Follow Updates](updates-link)** - Stay informed about new features
+5. **[Provide Feedback](feedback-link)** - Help improve ZeroDegree
+
+**Happy server managing! 🎉**

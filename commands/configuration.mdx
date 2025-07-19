@@ -1,0 +1,576 @@
+# Configuration Commands
+
+Configuration commands help you set up and customize ZeroDegree's features for your server. These commands typically require **Manage Server** or **Administrator** permissions.
+
+## /embed
+
+Create and manage custom embeds with interactive buttons and TagScript support.
+
+### Usage
+```
+/embed create [name] (description)
+/embed edit [embed]
+/embed send [embed] (channel)
+/embed list
+/embed delete [embed]
+/embed clone [embed] [name]
+```
+
+### Subcommands
+
+#### create
+Creates a new custom embed with an interactive builder.
+
+**Options:**
+- `name` (required) - Name for the custom embed (max 100 characters)
+- `description` (optional) - Description of what this embed does (max 500 characters)
+
+**Process:**
+1. Provide basic embed information (title, description, color, author, footer)
+2. Add images (thumbnail and main image)
+3. Add custom fields
+4. Add interactive buttons with TagScript support
+5. Finalize and save
+
+#### edit
+Edit an existing custom embed using the interactive builder.
+
+**Options:**
+- `embed` (required) - Select the embed to edit (autocomplete enabled)
+
+#### send
+Send a custom embed to a channel.
+
+**Options:**
+- `embed` (required) - Select the embed to send (autocomplete enabled)
+- `channel` (optional) - Target channel (defaults to current channel)
+
+#### list
+Display all custom embeds in the server with their details.
+
+#### delete
+Delete a custom embed from the server.
+
+**Options:**
+- `embed` (required) - Select the embed to delete (autocomplete enabled)
+
+#### clone
+Create a copy of an existing custom embed.
+
+**Options:**
+- `embed` (required) - Select the embed to clone (autocomplete enabled)
+- `name` (required) - Name for the cloned embed (max 100 characters)
+
+### Interactive Builder Features
+
+**Basic Information:**
+- Title (max 256 characters)
+- Description (max 4000 characters)
+- Color (hex format: #0099ff or 0x0099ff)
+- Author name (max 256 characters)
+- Footer text (max 2048 characters)
+
+**Images:**
+- Thumbnail image (URL)
+- Main image (URL)
+
+**Fields:**
+- Add multiple embed fields
+- Inline or block formatting
+- Custom field names and values
+
+**Interactive Buttons:**
+- Up to 25 buttons per embed (5 per row, 5 rows max)
+- Button styles: Primary, Secondary, Success, Danger, Link
+- Custom emojis support
+- TagScript integration for advanced functionality
+
+### TagScript Buttons
+
+Buttons can execute TagScript code for advanced automation:
+
+```tagscript
+{require(role_id):You need the required role!}
+{role(add):role_id}
+Welcome {user}! You now have the {role(role_id)} role.
+```
+
+**Available TagScript Features:**
+- User, member, guild, channel variables
+- Role management (add/remove roles)
+- Permission checks (require/deny)
+- Custom responses and embeds
+
+### Examples
+
+**Creating a Welcome Embed:**
+```
+/embed create name:"Server Welcome" description:"Welcome message for new members"
+```
+
+**Role Assignment Button:**
+```tagscript
+{require(123456789):You must be verified to get roles!}
+{role(toggle):987654321}
+{if({member.roles.has(987654321)}):
+  ✅ Role added successfully!
+|:
+  ❌ Role removed successfully!
+}
+```
+
+### Permissions Required
+- **Manage Messages** - To create, edit, and send embeds
+- **Use External Emojis** - For custom emoji buttons (if used)
+
+---
+
+## /welcome
+
+Configure welcome messages, auto-roles, and direct message settings for new members.
+
+### Usage
+```
+/welcome
+```
+
+### Features
+
+**Welcome Channel:**
+- Set a specific channel for welcome messages
+- Support for both text and embed messages
+- Variable support for personalization
+
+**Auto-Role:**
+- Automatically assign roles to new members
+- Multiple role support
+- Bypass bot role assignment
+
+**Direct Messages:**
+- Send welcome messages directly to new members
+- Customizable DM content
+- Embed support in DMs
+
+**Message Variables:**
+- `{user}` - Mentions the user
+- `{user.name}` - User's display name  
+- `{user.tag}` - User's full tag (name#discriminator)
+- `{guild}` - Server name
+- `{guild.membercount}` - Current member count
+- `{guild.members}` - Alias for member count
+
+### Interactive Configuration
+
+The welcome command opens an interactive menu with options:
+
+1. **Channel Settings** - Set welcome channel
+2. **Role Settings** - Configure auto-roles
+3. **Text Message** - Set up text welcome message
+4. **Embed Message** - Create rich embed welcome
+5. **DM Settings** - Configure direct messages
+6. **Test Preview** - Preview welcome message
+7. **Variables** - View available variables
+8. **Disable** - Turn off welcome system
+
+### Examples
+
+**Text Welcome Message:**
+```
+Welcome {user} to **{guild}**! 🎉
+You are member #{guild.membercount}
+```
+
+**Embed Welcome:**
+- Title: Welcome to {guild}!
+- Description: Thanks for joining, {user}! Please read our rules.
+- Color: #00ff00
+- Footer: Member #{guild.membercount}
+
+### Permissions Required
+- **Manage Server** - To configure welcome settings
+- **Manage Roles** - For auto-role functionality
+
+---
+
+## /giveaway
+
+Create and manage server giveaways with advanced features.
+
+### Usage
+```
+/giveaway start [channel] [time] [winners] [prize] (description) (requirements)
+/giveaway end [giveaway_id]
+/giveaway reroll [giveaway_id] (winners)
+/giveaway edit [giveaway_id]
+/giveaway list
+/giveaway delete [giveaway_id]
+```
+
+### Subcommands
+
+#### start
+Create a new giveaway.
+
+**Options:**
+- `channel` (required) - Channel to host the giveaway
+- `time` (required) - Duration (e.g., "1h", "30m", "2d") 
+- `winners` (required) - Number of winners (1-50)
+- `prize` (required) - What users can win
+- `description` (optional) - Additional giveaway details
+- `requirements` (optional) - Entry requirements
+
+**Time Format Examples:**
+- `1h` - 1 hour
+- `30m` - 30 minutes  
+- `2d` - 2 days
+- `1w` - 1 week
+- `5s` - 5 seconds
+
+#### end
+Manually end a giveaway early.
+
+**Options:**
+- `giveaway_id` (required) - ID of the giveaway to end
+
+#### reroll
+Reroll winners for a completed giveaway.
+
+**Options:**
+- `giveaway_id` (required) - ID of the giveaway to reroll
+- `winners` (optional) - Number of new winners (defaults to original)
+
+#### edit
+Edit an active giveaway's details.
+
+**Options:**
+- `giveaway_id` (required) - ID of the giveaway to edit
+
+#### list
+Show all active giveaways in the server.
+
+#### delete
+Delete a giveaway (active or ended).
+
+**Options:**
+- `giveaway_id` (required) - ID of the giveaway to delete
+
+### Giveaway Features
+
+**Entry Requirements:**
+- Minimum account age
+- Role requirements
+- Server boost requirements
+- Custom requirements
+
+**Advanced Options:**
+- Multiple winners
+- Automatic winner announcement
+- Entry validation
+- Giveaway templates
+
+### Examples
+
+**Simple Giveaway:**
+```
+/giveaway start channel:#giveaways time:"1h" winners:1 prize:"Discord Nitro"
+```
+
+**Advanced Giveaway:**
+```
+/giveaway start channel:#giveaways time:"2d" winners:3 prize:"Steam Gift Card" 
+description:"Follow our social media for bonus entries!" 
+requirements:"Must have @Member role"
+```
+
+### Permissions Required
+- **Manage Messages** - To create and manage giveaways
+- **Add Reactions** - For giveaway entry system
+
+---
+
+## /jointocreate
+
+Configure join-to-create voice channels for dynamic voice channel management.
+
+### Usage
+```
+/jointocreate setup [category] [channel_name] (user_limit)
+/jointocreate settings
+/jointocreate disable
+```
+
+### Features
+
+**Dynamic Channel Creation:**
+- Users join a "Join to Create" channel
+- Bot automatically creates a new voice channel
+- User becomes the channel owner
+- Channel deletes when empty
+
+**Customization Options:**
+- Custom channel naming patterns
+- User limits per channel
+- Category organization
+- Channel permissions
+
+**Channel Management:**
+- Channel owners can modify their channels
+- Kick users from their channels
+- Set user limits
+- Rename channels
+- Grant access to specific users
+
+### Subcommands
+
+#### setup
+Configure join-to-create system.
+
+**Options:**
+- `category` (required) - Category for created channels
+- `channel_name` (required) - Template for channel names
+- `user_limit` (optional) - Default user limit (0-99, 0 = unlimited)
+
+#### settings
+View current join-to-create configuration.
+
+#### disable
+Disable the join-to-create system.
+
+### Channel Name Variables
+
+**Available Variables:**
+- `{user}` - Channel creator's name
+- `{user.tag}` - Channel creator's tag
+- `{count}` - Channel number
+- `{guild}` - Server name
+
+### Examples
+
+**Basic Setup:**
+```
+/jointocreate setup category:"Voice Channels" channel_name:"{user}'s Channel"
+```
+
+**Advanced Setup:**
+```
+/jointocreate setup category:"Dynamic Voices" channel_name:"{user}'s Room #{count}" user_limit:10
+```
+
+### Permissions Required
+- **Manage Channels** - To create and delete voice channels
+- **Administrator** - For full join-to-create functionality
+
+---
+
+## /language
+
+Set the language for bot responses and messages.
+
+### Usage
+```
+/language set [language]
+/language list
+/language current
+```
+
+### Supported Languages
+
+- **English (en)** - Default language
+- **French (fr)** - Français
+- **German (de)** - Deutsch  
+- **Spanish (es)** - Español
+- **Portuguese (pt)** - Português
+
+### Subcommands
+
+#### set
+Change the server language.
+
+**Options:**
+- `language` (required) - Language code to set
+
+#### list
+Show all available languages.
+
+#### current
+Display the current server language.
+
+### Examples
+
+```
+/language set language:fr
+/language list
+/language current
+```
+
+### Permissions Required
+- **Manage Server** - To change server language
+
+---
+
+## /premium
+
+Manage premium features and subscriptions.
+
+### Usage
+```
+/premium status
+/premium features
+/premium redeem [code]
+```
+
+### Premium Features
+
+**Enhanced Limits:**
+- More custom embeds
+- Advanced giveaway options
+- Extended welcome customization
+- Priority support
+
+**Exclusive Features:**
+- Custom bot presence
+- Advanced TagScript features
+- Premium-only commands
+- Early access to new features
+
+### Subcommands
+
+#### status
+Check premium status for the server.
+
+#### features
+List all premium features and benefits.
+
+#### redeem
+Redeem a premium code.
+
+**Options:**
+- `code` (required) - Premium activation code
+
+### Permissions Required
+- **Manage Server** - To manage premium features
+
+---
+
+## /prefix
+
+Set custom prefixes for text commands (legacy support).
+
+### Usage
+```
+/prefix set [prefix]
+/prefix list
+/prefix remove [prefix]
+/prefix reset
+```
+
+### Prefix Rules
+
+- Maximum 3 custom prefixes
+- Prefixes can be 1-5 characters
+- Cannot conflict with Discord markdown
+- Case-sensitive
+
+### Subcommands
+
+#### set
+Add a new custom prefix.
+
+**Options:**
+- `prefix` (required) - Prefix to add (1-5 characters)
+
+#### list
+Show all current prefixes.
+
+#### remove
+Remove a custom prefix.
+
+**Options:**
+- `prefix` (required) - Prefix to remove
+
+#### reset
+Remove all custom prefixes (reset to default).
+
+### Examples
+
+```
+/prefix set prefix:"!"
+/prefix set prefix:"zd!"
+/prefix list
+/prefix remove prefix:"!"
+```
+
+### Permissions Required
+- **Manage Server** - To modify server prefixes
+
+---
+
+## /lock
+
+Lock channels to prevent users from sending messages.
+
+### Usage
+```
+/lock (channel) (reason)
+```
+
+### Options
+- `channel` (optional) - Channel to lock (defaults to current)
+- `reason` (optional) - Reason for locking the channel
+
+### Features
+
+**Lock Types:**
+- Text channel message blocking
+- Voice channel connection blocking
+- Category-wide locking
+- Temporary locks with auto-unlock
+
+**Permission Handling:**
+- Preserves existing permissions
+- Creates permission overwrites
+- Affects @everyone role by default
+
+### Examples
+
+```
+/lock
+/lock channel:#general reason:"Maintenance"
+/lock channel:#spam reason:"Cleaning up spam"
+```
+
+### Permissions Required
+- **Manage Channels** - To lock/unlock channels
+
+---
+
+## /unlock
+
+Unlock previously locked channels.
+
+### Usage
+```
+/unlock (channel) (reason)
+```
+
+### Options
+- `channel` (optional) - Channel to unlock (defaults to current)
+- `reason` (optional) - Reason for unlocking the channel
+
+### Features
+
+**Unlock Process:**
+- Removes lock permission overwrites
+- Restores previous permissions
+- Works with all channel types
+- Logs unlock actions
+
+### Examples
+
+```
+/unlock
+/unlock channel:#general reason:"Maintenance complete"
+```
+
+### Permissions Required
+- **Manage Channels** - To lock/unlock channels

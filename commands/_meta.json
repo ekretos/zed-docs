@@ -1,0 +1,8 @@
+{
+    "configuration": "Configuration Commands",
+    "moderation": "Moderation Commands",
+    "antinuke": "Anti-Nuke Commands",
+    "automod": "Auto-Moderation Commands",
+    "utility": "Utility Commands",
+    "info": "Information Commands"
+}

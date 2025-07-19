@@ -1,0 +1,444 @@
+# Creating Custom Embeds Tutorial
+
+Learn how to create stunning, interactive embeds with ZeroDegree's powerful embed system. This tutorial will guide you through the entire process, from basic embeds to advanced TagScript integration.
+
+## What You'll Build
+
+By the end of this tutorial, you'll have created:
+- A professional server information embed
+- Interactive role assignment buttons
+- Dynamic content using TagScript
+- A complete welcome panel system
+
+## Prerequisites
+
+- ZeroDegree bot invited to your server
+- **Manage Messages** permission
+- Basic understanding of Discord permissions
+
+---
+
+## Part 1: Creating Your First Embed
+
+### Step 1: Start the Creation Process
+
+```
+/embed create name:"Server Info" description:"Main server information panel"
+```
+
+This opens the embed creation modal where you'll enter basic information.
+
+### Step 2: Fill Out Basic Information
+
+**In the modal, enter:**
+- **Title:** "Welcome to Our Server!"
+- **Description:** "Everything you need to know about our community"
+- **Color:** "#0099ff" (or any hex color you prefer)
+- **Author:** "Server Staff"
+- **Footer:** "Updated daily • Server Rules Apply"
+
+Click **Submit** to proceed to the builder interface.
+
+### Step 3: Understanding the Builder Interface
+
+After submitting, you'll see:
+- **Preview** of your embed
+- **Action buttons** for customization:
+  - 🖼 **Add Images** - Thumbnail and main images
+  - 📝 **Add Fields** - Structured information
+  - 🔘 **Add Buttons** - Interactive elements
+  - ✅ **Finish & Save** - Complete the embed
+
+---
+
+## Part 2: Adding Visual Elements
+
+### Step 4: Add Images
+
+Click **🖼 Add Images** to enhance your embed visually.
+
+**Image Types:**
+- **Thumbnail** - Small image in top-right corner
+- **Main Image** - Large image at bottom of embed
+
+**Best Practices:**
+- Use high-quality images (PNG/JPG)
+- Keep thumbnails under 1MB
+- Use your server icon for thumbnail
+- Use banners or artwork for main image
+
+**Example URLs:**
+```
+Thumbnail: https://cdn.discordapp.com/icons/GUILD_ID/ICON_HASH.png
+Main Image: https://example.com/server-banner.png
+```
+
+### Step 5: Add Structured Fields
+
+Click **📝 Add Fields** to add organized information.
+
+**Field Structure:**
+- **Name** - Field title (max 256 characters)
+- **Value** - Field content (max 1024 characters)  
+- **Inline** - Display fields side by side
+
+**Example Fields:**
+```
+Name: "📋 Server Rules"
+Value: "1. Be respectful\n2. No spam\n3. Follow Discord ToS"
+Inline: false
+
+Name: "🎮 Game Channels"
+Value: "#minecraft\n#valorant\n#general-gaming"
+Inline: true
+
+Name: "🔧 Utility Channels"  
+Value: "#bot-commands\n#suggestions\n#help"
+Inline: true
+```
+
+---
+
+## Part 3: Creating Interactive Buttons
+
+### Step 6: Add Your First Button
+
+Click **🔘 Add Buttons** to make your embed interactive.
+
+**Button Configuration:**
+- **Label** - Text displayed on button
+- **Style** - Visual appearance (Primary, Secondary, Success, Danger, Link)
+- **Emoji** - Optional emoji (e.g., 🎭, 🎮, 📝)
+- **Action Type** - What the button does
+
+### Step 7: Create a Role Assignment Button
+
+**Example: Gaming Role Button**
+```
+Label: "Get Gaming Role"
+Style: Primary (Blue)
+Emoji: 🎮
+Action Type: TagScript
+```
+
+**TagScript Code:**
+```tagscript
+{require(verified):You must be verified to get roles!}
+{role(toggle):GAMING_ROLE_ID}
+{if({member.roles.has(GAMING_ROLE_ID)}):
+✅ Gaming role assigned! Welcome to the gaming community.
+|:
+❌ Gaming role removed. You can get it back anytime!
+}
+```
+
+*Replace `GAMING_ROLE_ID` with your actual role ID*
+
+### Step 8: Add Multiple Role Buttons
+
+Create additional buttons for different roles:
+
+**Art Role Button:**
+```tagscript
+{role(toggle):ART_ROLE_ID}
+{if({member.roles.has(ART_ROLE_ID)}):
+🎨 Art role assigned! Check out #art-showcase
+|:
+🎨 Art role removed.
+}
+```
+
+**Event Notifications Button:**
+```tagscript
+{role(toggle):EVENTS_ROLE_ID}
+{if({member.roles.has(EVENTS_ROLE_ID)}):
+📅 You'll now receive event notifications!
+|:
+📅 Event notifications disabled.
+}
+```
+
+---
+
+## Part 4: Advanced TagScript Features
+
+### Step 9: Permission-Based Buttons
+
+Create buttons that check permissions:
+
+**Moderator-Only Button:**
+```tagscript
+{require(Manage Messages):Only moderators can use this button!}
+Welcome to the staff area, {user.mention}!
+```
+
+**Role-Specific Content:**
+```tagscript
+{if({member.roles.has(VIP_ROLE_ID)}):
+Welcome VIP member! You have access to exclusive channels.
+|:
+{if({member.roles.has(PREMIUM_ROLE_ID)}):
+Hello Premium member! Enjoy your benefits.
+|:
+Welcome regular member! Consider upgrading for more features.
+}
+}
+```
+
+### Step 10: Dynamic Information Buttons
+
+**Server Stats Button:**
+```tagscript
+📊 **Server Statistics**
+
+👥 Members: {guild.membercount}
+🏷️ Your Roles: {member.roles.length}
+📅 Joined: {member.joinedAt:YYYY-MM-DD}
+⏰ Server Time: {now:HH:mm UTC}
+```
+
+**User Info Button:**
+```tagscript
+👤 **Your Information**
+
+🆔 User ID: {user.id}
+📛 Nickname: {member.displayName}
+🎂 Account Created: {user.createdAt:YYYY-MM-DD}
+📅 Joined Server: {member.joinedAt:YYYY-MM-DD}
+```
+
+---
+
+## Part 5: Finalizing Your Embed
+
+### Step 11: Preview and Test
+
+Before finalizing:
+1. Use **Preview** to see the final result
+2. Test all buttons in a private channel
+3. Verify role assignments work correctly
+4. Check permissions and error handling
+
+### Step 12: Save and Deploy
+
+Click **✅ Finish & Save** to save your embed.
+
+**Deployment Options:**
+```
+/embed send embed:"Server Info" channel:#welcome
+/embed send embed:"Server Info" channel:#roles
+```
+
+---
+
+## Part 6: Advanced Embed Examples
+
+### Example 1: FAQ Embed with Collapsible Sections
+
+**TagScript for FAQ Button:**
+```tagscript
+❓ **Frequently Asked Questions**
+
+**Q: How do I get roles?**
+A: Click the role buttons in this embed!
+
+**Q: Where can I report issues?**
+A: Use our ticket system in #support
+
+**Q: What are the server rules?**
+A: Check #rules for complete guidelines
+
+Need more help? Open a support ticket!
+```
+
+### Example 2: Event Registration System
+
+**Event Button TagScript:**
+```tagscript
+{require(events):You need the @Events role first!}
+{if({member.roles.has(EVENT_ATTENDEE_ROLE)}):
+❌ You're already registered for this event!
+|:
+{role(add):EVENT_ATTENDEE_ROLE}
+✅ Successfully registered for the event!
+📅 Event: Community Game Night
+⏰ Time: Saturday 8PM EST
+📍 Channel: #event-voice
+}
+```
+
+### Example 3: Ticket System Integration
+
+**Support Ticket Button:**
+```tagscript
+🎫 **Support Ticket Created**
+
+Your ticket has been created: #ticket-{user.id}
+A staff member will assist you shortly.
+
+**What to expect:**
+• Response within 2-4 hours
+• Professional assistance
+• Complete confidentiality
+
+Thank you for your patience!
+```
+
+---
+
+## Best Practices & Tips
+
+### Design Guidelines
+
+**Visual Hierarchy:**
+- Use consistent colors throughout your server
+- Limit embeds to 3-4 fields for readability
+- Choose emojis that match your server theme
+- Keep button labels short and clear
+
+**Content Organization:**
+- Group related buttons together
+- Use descriptive field names
+- Write clear, concise descriptions
+- Include helpful instructions
+
+### TagScript Optimization
+
+**Performance Tips:**
+- Use specific role checks instead of broad permissions
+- Cache frequently accessed data
+- Minimize API calls in scripts
+- Test scripts thoroughly before deployment
+
+**Security Considerations:**
+- Always validate user permissions
+- Use `{require()}` for sensitive actions
+- Implement rate limiting for buttons
+- Log important actions for audit trails
+
+### Maintenance and Updates
+
+**Regular Reviews:**
+- Update role IDs if roles change
+- Refresh outdated information
+- Test buttons after server changes
+- Monitor button usage statistics
+
+**Version Control:**
+- Keep backup copies of complex embeds
+- Document TagScript changes
+- Use descriptive embed names
+- Track embed performance metrics
+
+---
+
+## Troubleshooting Common Issues
+
+### Button Not Working
+
+**Symptoms:** Button clicks don't respond
+**Solutions:**
+1. Check TagScript syntax
+2. Verify role IDs are correct
+3. Confirm bot has necessary permissions
+4. Test in a different channel
+
+### Role Assignment Failing
+
+**Symptoms:** Roles not added/removed
+**Solutions:**
+1. Check bot role hierarchy
+2. Verify "Manage Roles" permission
+3. Ensure target role is below bot's role
+4. Check for role permission conflicts
+
+### Permission Errors
+
+**Symptoms:** Users get permission denied messages
+**Solutions:**
+1. Review `{require()}` statements
+2. Check user roles and permissions
+3. Verify channel-specific permissions
+4. Update permission checks in TagScript
+
+### Embed Not Displaying
+
+**Symptoms:** Embed appears broken or empty
+**Solutions:**
+1. Check embed content length limits
+2. Verify image URLs are accessible
+3. Confirm proper markdown formatting
+4. Test with minimal embed first
+
+---
+
+## Next Steps
+
+Congratulations! You've created your first interactive embed. Here's what to explore next:
+
+### Advanced Features
+- **Conditional Logic** - Create dynamic responses
+- **User Data Storage** - Remember user preferences
+- **External APIs** - Fetch live data
+- **Scheduled Updates** - Automatic content updates
+
+### Integration Opportunities
+- **Welcome System** - Combine with welcome messages
+- **Giveaway Integration** - Entry requirement checking
+- **Moderation Tools** - Quick action buttons
+- **Analytics Tracking** - Monitor user interactions
+
+### Community Resources
+- **Template Library** - Browse community creations
+- **TagScript Examples** - Learn from others' code
+- **Support Server** - Get help with complex projects
+- **Video Tutorials** - Watch advanced techniques
+
+---
+
+## Sample Templates
+
+### Gaming Community Roles Panel
+```
+Title: "🎮 Choose Your Games"
+Description: "Select roles for your favorite games to get notifications and access to game-specific channels!"
+
+Buttons:
+• 🔫 Valorant
+• ⛏️ Minecraft  
+• 🚗 Rocket League
+• 🎯 Overwatch
+• 🎲 Board Games
+```
+
+### Study Server Organization
+```
+Title: "📚 Study Groups & Subjects"
+Description: "Join study groups and get access to subject-specific resources!"
+
+Buttons:
+• 🧮 Mathematics
+• 🔬 Science
+• 📖 Literature
+• 💻 Computer Science
+• 🌍 Geography
+```
+
+### Creative Community Hub
+```
+Title: "🎨 Creative Roles"
+Description: "Show off your creative interests and connect with like-minded members!"
+
+Buttons:
+• 🖌️ Digital Art
+• 📸 Photography
+• ✍️ Writing
+• 🎵 Music
+• 🎭 Voice Acting
+```
+
+**Ready to create your own embeds?** Start with the basic tutorial above and gradually work your way up to more complex TagScript implementations. Remember, the key to great embeds is starting simple and adding complexity as you learn!
+
+---
+
+*Need help with your embed? Join our [support server](support-link) and share your creation for feedback and assistance!*

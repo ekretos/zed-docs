@@ -1,0 +1,398 @@
+# Utility Commands
+
+ZeroDegree offers various utility commands to enhance server management and provide helpful tools for administrators and members.
+
+## Channel Management
+
+### /lock
+Lock channels to prevent users from sending messages or joining voice channels.
+
+#### Usage
+```
+/lock (channel) (reason)
+```
+
+#### Options
+- `channel` (optional) - Channel to lock (defaults to current channel)
+- `reason` (optional) - Reason for locking the channel
+
+#### Features
+**Lock Types:**
+- **Text Channel Lock** - Prevents message sending and reactions
+- **Voice Channel Lock** - Prevents users from joining
+- **Category Lock** - Locks all channels in a category
+- **Thread Lock** - Locks specific threads
+
+**Permission Handling:**
+- Preserves existing channel permissions
+- Creates temporary permission overwrites
+- Affects @everyone role by default
+- Maintains role hierarchy
+
+**Safety Features:**
+- Cannot lock channels above your permission level
+- Moderators with "Manage Channels" can always unlock
+- Audit log integration
+- Automatic unlock options
+
+#### Examples
+```
+/lock
+/lock channel:#general reason:"Temporary maintenance"
+/lock channel:#spam-reports reason:"Cleaning up reports"
+```
+
+---
+
+### /unlock
+Remove locks from previously locked channels.
+
+#### Usage
+```
+/unlock (channel) (reason)
+```
+
+#### Options
+- `channel` (optional) - Channel to unlock (defaults to current channel)
+- `reason` (optional) - Reason for unlocking
+
+#### Features
+**Unlock Process:**
+- Removes temporary permission overwrites
+- Restores previous channel state
+- Works with all lock types
+- Logs unlock actions
+
+#### Examples
+```
+/unlock
+/unlock channel:#general reason:"Maintenance completed"
+```
+
+---
+
+## Language Management
+
+### /language
+Configure the bot's language settings for your server.
+
+#### Usage
+```
+/language set [language]
+/language list
+/language current
+```
+
+#### Supported Languages
+- **English (en)** - Default language
+- **French (fr)** - Français  
+- **German (de)** - Deutsch
+- **Spanish (es)** - Español
+- **Portuguese (pt)** - Português
+
+#### Subcommands
+
+##### set
+Change the server's language setting.
+
+**Options:**
+- `language` (required) - Language code to set
+
+##### list
+Display all available languages with their codes.
+
+##### current
+Show the currently configured language.
+
+#### Examples
+```
+/language set language:fr
+/language list
+/language current
+```
+
+---
+
+## Prefix Management
+
+### /prefix
+Manage custom command prefixes for legacy text commands.
+
+#### Usage
+```
+/prefix set [prefix]
+/prefix list
+/prefix remove [prefix]
+/prefix reset
+```
+
+#### Prefix Rules
+- Maximum 3 custom prefixes per server
+- Length: 1-5 characters
+- Cannot conflict with Discord markdown (`*`, `_`, `~`, etc.)
+- Case-sensitive matching
+
+#### Subcommands
+
+##### set
+Add a new custom prefix.
+
+**Options:**
+- `prefix` (required) - Prefix to add (1-5 characters)
+
+##### list
+Show all current server prefixes.
+
+##### remove
+Remove a specific custom prefix.
+
+**Options:**
+- `prefix` (required) - Prefix to remove
+
+##### reset
+Remove all custom prefixes and reset to default.
+
+#### Examples
+```
+/prefix set prefix:"!"
+/prefix set prefix:"zd."
+/prefix list
+/prefix remove prefix:"!"
+/prefix reset
+```
+
+---
+
+## Premium Features
+
+### /premium
+Manage premium subscriptions and features.
+
+#### Usage
+```
+/premium status
+/premium features
+/premium redeem [code]
+```
+
+#### Premium Benefits
+
+**Enhanced Limits:**
+- More custom embeds (50 vs 10)
+- Extended giveaway duration
+- Advanced welcome customization
+- Higher auto-mod thresholds
+
+**Exclusive Features:**
+- Custom bot status messages
+- Priority command processing
+- Advanced TagScript functions
+- Beta feature access
+
+**Premium Support:**
+- Dedicated support channel
+- Faster response times
+- One-on-one configuration help
+- Custom feature requests
+
+#### Subcommands
+
+##### status
+Check current premium status for the server.
+
+**Information Displayed:**
+- Premium tier level
+- Expiration date
+- Available features
+- Usage statistics
+
+##### features
+List all premium features and benefits.
+
+##### redeem
+Activate premium with a redemption code.
+
+**Options:**
+- `code` (required) - Premium activation code
+
+#### Examples
+```
+/premium status
+/premium features
+/premium redeem code:"PREMIUM-CODE-HERE"
+```
+
+---
+
+## Additional Utility Features
+
+### Server Information
+Get detailed information about your server's bot configuration:
+
+#### Configuration Overview
+- **Active Features** - Currently enabled systems
+- **Permission Status** - Bot permission verification
+- **Usage Statistics** - Command usage and activity
+- **Health Check** - System status indicators
+
+#### Settings Summary
+- **Auto-Moderation** - Filter status and configurations
+- **Welcome System** - Message and role settings
+- **Anti-Nuke** - Protection level and whitelist
+- **Custom Features** - Embeds, tags, and triggers
+
+### Performance Monitoring
+
+#### System Health
+- **Response Times** - Command processing speed
+- **Error Rates** - Command failure frequency
+- **Uptime Statistics** - Bot availability metrics
+- **Resource Usage** - Memory and CPU utilization
+
+#### Activity Tracking
+- **Command Usage** - Most used features
+- **User Engagement** - Active members and interactions
+- **Feature Adoption** - Configuration completion rates
+- **Growth Metrics** - Server and usage trends
+
+### Backup and Recovery
+
+#### Configuration Backup
+- **Settings Export** - Download server configurations
+- **Template Creation** - Save setups for other servers
+- **Restore Options** - Recover from backups
+- **Migration Tools** - Transfer between servers
+
+#### Data Management
+- **User Data** - Manage stored user information
+- **Audit Logs** - Access historical data
+- **Privacy Controls** - Data retention settings
+- **Compliance Tools** - GDPR and privacy management
+
+## Best Practices
+
+### Channel Management
+**Lock/Unlock Guidelines:**
+1. Always provide clear reasons for locks
+2. Announce temporary locks in advance
+3. Use category locks for server-wide events
+4. Set automatic unlock timers when possible
+5. Maintain communication during locks
+
+**Permission Best Practices:**
+- Review channel permissions regularly
+- Use role-based access control
+- Implement least-privilege principle
+- Document permission changes
+- Train moderators on proper usage
+
+### Language Configuration
+**Localization Tips:**
+1. Choose language based on majority user base
+2. Inform users about language changes
+3. Consider regional dialects and preferences
+4. Test commands after language changes
+5. Provide translations for important announcements
+
+### Prefix Management
+**Prefix Selection:**
+- Choose memorable and unique prefixes
+- Avoid conflicts with other bots
+- Consider ease of typing on mobile
+- Keep prefixes short and simple
+- Document prefixes for user reference
+
+### Premium Optimization
+**Maximizing Premium Value:**
+1. Utilize enhanced limits fully
+2. Explore exclusive features regularly
+3. Take advantage of priority support
+4. Participate in beta testing
+5. Provide feedback for improvements
+
+## Troubleshooting
+
+### Common Issues
+
+#### Lock/Unlock Problems
+- **Cannot Lock Channel**: Check "Manage Channels" permission
+- **Lock Not Working**: Verify role hierarchy
+- **Cannot Unlock**: Ensure proper permissions
+- **Partial Lock**: Review channel-specific permissions
+
+#### Language Issues
+- **Commands Still in English**: Allow time for cache refresh
+- **Missing Translations**: Report to support team
+- **Inconsistent Language**: Check user vs server settings
+- **Invalid Language Code**: Use `/language list` for valid codes
+
+#### Prefix Conflicts
+- **Prefix Not Working**: Check for conflicts with other bots
+- **Cannot Add Prefix**: Verify character restrictions
+- **Prefix Ignored**: Ensure exact character matching
+- **Too Many Prefixes**: Remove unused prefixes
+
+#### Premium Issues
+- **Code Not Working**: Check code validity and expiration
+- **Features Not Unlocked**: Allow time for activation
+- **Subscription Expired**: Renew through premium portal
+- **Billing Questions**: Contact premium support
+
+### Getting Help
+
+#### Self-Service Options
+1. Check documentation for detailed guides
+2. Use `/help` for command-specific information
+3. Review error messages carefully
+4. Test in a development server first
+5. Check bot permissions thoroughly
+
+#### Support Channels
+- **Documentation** - Comprehensive guides
+- **Support Server** - Community help
+- **Bug Reports** - Technical issues
+- **Feature Requests** - Enhancement suggestions
+
+#### Emergency Support
+For critical issues affecting server operations:
+- Use emergency support channel
+- Provide detailed problem description
+- Include error messages and screenshots
+- Mention server ID and admin contact
+
+## Advanced Features
+
+### Automation Integration
+**Workflow Enhancement:**
+- Combine utility commands with triggers
+- Create automated maintenance procedures
+- Set up scheduled lock/unlock operations
+- Integrate with external monitoring systems
+
+### Custom Workflows
+**Server Management Automation:**
+1. **Maintenance Mode** - Automated lock/unlock sequences
+2. **Language Switching** - Scheduled language updates
+3. **Premium Monitoring** - Automatic renewal reminders
+4. **Backup Schedules** - Regular configuration exports
+
+### API Integration
+**External System Integration:**
+- Webhook notifications for utility actions
+- External monitoring integration
+- Custom dashboard development
+- Third-party service connections
+
+## Permissions Required
+
+### Command Permissions
+- **Channel Management** (`/lock`, `/unlock`) - Manage Channels
+- **Language Setting** (`/language`) - Manage Server
+- **Prefix Management** (`/prefix`) - Manage Server  
+- **Premium Features** (`/premium`) - Manage Server
+
+### Bot Permissions
+- **Manage Channels** - For lock/unlock functionality
+- **Send Messages** - For command responses
+- **View Audit Log** - For logging actions
+- **Use External Emojis** - For enhanced UI elements

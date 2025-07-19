@@ -1,0 +1,389 @@
+# Auto-Moderation Commands
+
+ZeroDegree's auto-moderation system provides comprehensive automated content filtering and user management. Configure various filters and automated responses to maintain server quality.
+
+## /automod
+
+Configure the main auto-moderation system with interactive menus.
+
+### Usage
+```
+/automod
+```
+
+### Auto-Moderation Features
+
+The `/automod` command opens an interactive configuration menu with the following systems:
+
+### Link Filter System
+
+**Purpose:**
+- Block malicious URLs
+- Prevent phishing attempts
+- Control external link sharing
+- Whitelist trusted domains
+
+**Configuration Options:**
+- Enable/disable link filtering
+- Whitelist specific domains
+- Set punishment severity
+- Configure bypass roles
+
+**Detection Types:**
+- Suspicious shorteners
+- Known malicious domains
+- Phishing sites
+- Adult content links
+- Social media restrictions
+
+### Mention Filter System
+
+**Purpose:**
+- Prevent mention spam
+- Control mass mentions
+- Reduce notification abuse
+- Protect against raid attempts
+
+**Settings:**
+- Maximum mentions per message
+- Everyone/here mention restrictions
+- Role mention limitations
+- User mention thresholds
+- Time-based limits
+
+**Punishment Options:**
+- Delete message
+- Timeout user
+- Issue warnings
+- Escalate to ban
+
+### Join Gate System
+
+**Purpose:**
+- Filter new member accounts
+- Prevent raid attempts
+- Verify account legitimacy
+- Control server access
+
+**Verification Methods:**
+- Account age requirements
+- Reaction-based verification
+- Captcha verification
+- Manual approval
+- Role-based gates
+
+**Safety Features:**
+- Automatic suspicious account detection
+- Mass join monitoring
+- Rate limiting
+- Backup verification methods
+
+### Bad Words Filter
+
+**Purpose:**
+- Filter inappropriate content
+- Maintain server standards
+- Protect younger audiences
+- Customize content rules
+
+**Filter Types:**
+- Profanity detection
+- Custom word lists
+- Context-aware filtering
+- Severity-based responses
+- Language-specific filters
+
+**Management Options:**
+- Add custom words
+- Remove false positives
+- Set punishment levels
+- Configure bypass permissions
+- Export/import word lists
+
+### Strike System Integration
+
+**Purpose:**
+- Track user infractions
+- Escalate punishments
+- Maintain user records
+- Automated enforcement
+
+**Strike Triggers:**
+- Filter violations
+- Repeated offenses
+- Severity accumulation
+- Time-based escalation
+
+## Interactive Configuration Menu
+
+### Main Menu Options
+
+When you run `/automod`, you'll see an interactive menu with these options:
+
+#### 🔗 Link Filter
+Configure link and URL filtering settings.
+
+**Sub-options:**
+- **Enable/Disable** - Toggle link filtering
+- **Configure** - Advanced link filter settings
+- **Whitelist** - Manage allowed domains
+- **Test** - Test link detection
+
+#### 📢 Mention Filter  
+Set up mention spam protection.
+
+**Sub-options:**
+- **Enable/Disable** - Toggle mention filtering
+- **Limits** - Set mention thresholds
+- **Permissions** - Configure bypass roles
+- **Punishments** - Set violation responses
+
+#### 🚪 Join Gate
+Configure new member verification.
+
+**Sub-options:**
+- **Enable/Disable** - Toggle join gate
+- **Requirements** - Set verification criteria  
+- **Methods** - Choose verification types
+- **Bypass** - Configure role bypasses
+
+#### 🤬 Bad Words
+Manage content filtering.
+
+**Sub-options:**
+- **Toggle Filters** - Enable/disable word filtering
+- **Custom Words** - Manage custom word lists
+- **Punishments** - Set violation responses
+- **Whitelist** - Add exception words
+
+#### ⚡ Strikes
+Configure the strike system.
+
+**Sub-options:**
+- **Thresholds** - Set strike limits
+- **Punishments** - Configure escalation
+- **Reset** - Manage strike expiration
+- **View** - Check user strikes
+
+#### ⚙️ Admin Settings
+Advanced configuration options.
+
+**Sub-options:**
+- **Exempt Roles** - Roles that bypass filters
+- **Log Channel** - Set moderation logs
+- **Disable All** - Turn off all auto-mod
+- **Reset Settings** - Return to defaults
+
+## Configuration Examples
+
+### Link Filter Setup
+
+**Basic Configuration:**
+1. Run `/automod`
+2. Click "🔗 Link Filter"
+3. Click "Enable" to activate
+4. Click "Configure" for advanced settings
+5. Set punishment level (Delete/Warn/Timeout)
+6. Add trusted domains to whitelist
+
+**Advanced Settings:**
+- Block URL shorteners
+- Require manual review for unknown domains
+- Set different rules for different channels
+- Configure role-based bypasses
+
+### Mention Filter Setup
+
+**Recommended Settings:**
+- Maximum 5 mentions per message
+- Block @everyone/@here for regular members
+- Allow unlimited for moderators
+- 30-second cooldown between mass mentions
+
+**Configuration Steps:**
+1. Run `/automod`
+2. Click "📢 Mention Filter"
+3. Click "Enable"
+4. Click "Limits" to set thresholds
+5. Configure bypass roles
+6. Set punishment escalation
+
+### Bad Words Configuration
+
+**Custom Word List:**
+1. Run `/automod`
+2. Click "🤬 Bad Words"
+3. Click "Custom Words"
+4. Click "Add Word" to add terms
+5. Set severity levels
+6. Configure context awareness
+
+**Filter Sensitivity:**
+- **Strict** - Catches variations and leetspeak
+- **Medium** - Balanced detection
+- **Lenient** - Only exact matches
+
+### Join Gate Setup
+
+**Account Age Verification:**
+1. Run `/automod`
+2. Click "🚪 Join Gate"
+3. Click "Enable"
+4. Set minimum account age (recommended: 7 days)
+5. Configure verification channel
+6. Set up automatic role assignment
+
+**Verification Methods:**
+- React to emoji
+- Answer security question
+- Complete captcha
+- Manual moderator approval
+
+## Advanced Features
+
+### Exemption System
+
+**Role-Based Exemptions:**
+- Administrators bypass all filters
+- Moderators have relaxed limits
+- Trusted members get special permissions
+- VIP roles have custom rules
+
+**Channel-Based Rules:**
+- Different rules for different channels
+- Relaxed filtering in designated areas
+- Strict enforcement in public channels
+- Custom rules for voice channels
+
+### Logging and Monitoring
+
+**Auto-Mod Logs:**
+- All filter triggers logged
+- User punishment history
+- False positive tracking
+- System performance metrics
+
+**Log Channel Setup:**
+1. Create dedicated log channel
+2. Run `/automod`
+3. Go to "Admin Settings"
+4. Set log channel
+5. Configure log verbosity
+
+### Integration Features
+
+**Strike System Integration:**
+- Auto-mod violations add strikes
+- Escalating punishments
+- Automated enforcement
+- Appeal system integration
+
+**Welcome System Integration:**
+- New member verification
+- Automatic role assignment
+- Onboarding process
+- Security screening
+
+### Filter Customization
+
+**Context-Aware Filtering:**
+- Different rules for different contexts
+- Smart detection algorithms
+- Learning from moderator actions
+- Community-specific adjustments
+
+**Machine Learning:**
+- Adaptive filter improvement
+- Pattern recognition
+- False positive reduction
+- Custom model training
+
+## Best Practices
+
+### Initial Setup
+
+**Recommended Order:**
+1. Set up logging channel
+2. Configure basic word filter
+3. Enable mention protection
+4. Set up join gate
+5. Fine-tune link filter
+6. Add role exemptions
+
+### Ongoing Maintenance
+
+**Regular Tasks:**
+- Review auto-mod logs weekly
+- Update custom word lists
+- Adjust thresholds based on activity
+- Train new moderators on overrides
+
+**Performance Monitoring:**
+- Check filter effectiveness
+- Monitor false positive rates
+- Track user complaints
+- Adjust sensitivity as needed
+
+### Security Considerations
+
+**Privacy Protection:**
+- Secure handling of filtered content
+- Limited log retention
+- Moderator access controls
+- Data protection compliance
+
+**Bypass Prevention:**
+- Monitor exemption usage
+- Regular permission audits
+- Detect abuse patterns
+- Implement override logging
+
+## Troubleshooting
+
+### Common Issues
+
+**High False Positives:**
+- Reduce filter sensitivity
+- Add words to whitelist
+- Adjust context detection
+- Review custom word lists
+
+**Missing Detections:**
+- Increase sensitivity
+- Add new patterns
+- Check exemption settings
+- Verify filter status
+
+**Performance Issues:**
+- Optimize filter rules
+- Reduce log verbosity
+- Check server resources
+- Contact support
+
+### Getting Help
+
+**Built-in Help:**
+- Use interactive menus
+- Check configuration status
+- Review recent logs
+- Test filter functions
+
+**Support Resources:**
+- Documentation guides
+- Community forums
+- Direct bot support
+- Video tutorials
+
+## Permissions Required
+
+### User Permissions
+- **Manage Server** - To configure auto-moderation
+- **Manage Messages** - For message deletion features
+- **Moderate Members** - For timeout/mute features
+
+### Bot Permissions
+- **Manage Messages** - To delete filtered content
+- **Moderate Members** - To timeout users
+- **View Audit Log** - For comprehensive logging
+- **Send Messages** - For notifications and logs
+- **Use External Emojis** - For interactive menus

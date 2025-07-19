@@ -1,0 +1,1004 @@
+# Moderation Commands
+
+ZeroDegree provides comprehensive moderation tools to help you manage your Discord server effectively. These commands require appropriate permissions and follow Discord's hierarchy rules.
+
+## /ban
+
+Ban users from the server, even if they're not currently members.
+
+### Usage
+```
+/ban [user] (reason)
+```
+
+### Options
+- `user` (required) - User to ban (can be ID, mention, or username)
+- `reason` (optional) - Reason for the ban (logged in audit log)
+
+### Features
+
+**Flexible User Input:**
+- Ban by user mention (@user)
+- Ban by user ID (for users not in server)
+- Ban by username search
+
+**Safety Checks:**
+- Cannot ban users higher in role hierarchy
+- Cannot ban yourself
+- Cannot ban server owner
+- Checks bot permissions
+
+**Audit Logging:**
+- Logs ban reason to Discord audit log
+- Records moderator who issued the ban
+- Timestamp and user information
+
+### Examples
+
+```
+/ban user:@SpamUser reason:"Spamming in general chat"
+/ban user:123456789012345678 reason:"Raiding attempt"
+/ban user:"BadUser#1234" reason:"Harassment"
+```
+
+### Permissions Required
+- **Ban Members** - User permission
+- **Ban Members** - Bot permission
+
+---
+
+## /kick
+
+Remove users from the server (they can rejoin with invite).
+
+### Usage
+```
+/kick [user] (reason)
+```
+
+### Options
+- `user` (required) - Server member to kick
+- `reason` (optional) - Reason for the kick
+
+### Features
+
+**Member Validation:**
+- Must be a current server member
+- Role hierarchy respected
+- Permission checks performed
+
+**Kick vs Ban:**
+- User can rejoin with valid invite
+- Less severe than ban
+- Good for warnings/temporary removal
+
+### Examples
+
+```
+/kick user:@TroubleMaker reason:"Breaking server rules"
+/kick user:@NewUser reason:"Inappropriate behavior"
+```
+
+### Permissions Required
+- **Kick Members** - User permission
+- **Kick Members** - Bot permission
+
+---
+
+## /mute
+
+Temporarily or permanently restrict a user's ability to send messages and speak in voice.
+
+### Usage
+```
+/mute [user] (duration) (reason)
+```
+
+### Options
+- `user` (required) - Member to mute
+- `duration` (optional) - Mute duration (e.g., "1h", "30m", "1d")
+- `reason` (optional) - Reason for mute
+
+### Duration Formats
+
+**Time Units:**
+- `s` - seconds
+- `m` - minutes
+- `h` - hours
+- `d` - days
+- `w` - weeks
+
+**Examples:**
+- `30m` - 30 minutes
+- `2h` - 2 hours
+- `1d` - 1 day
+- `1w` - 1 week
+
+### Mute Types
+
+**Text Mute:**
+- Removes send message permissions
+- Prevents reactions
+- Blocks thread creation
+
+**Voice Mute:**
+- Server mutes in voice channels
+- Prevents speaking
+- Can still hear others
+
+### Examples
+
+```
+/mute user:@ChatterBox duration:"1h" reason:"Excessive caps"
+/mute user:@Spammer duration:"30m" reason:"Spam messages"
+/mute user:@Toxic reason:"Toxic behavior - indefinite"
+```
+
+### Permissions Required
+- **Moderate Members** - User permission
+- **Moderate Members** - Bot permission
+
+---
+
+## /unmute
+
+Remove mute from users and restore their permissions.
+
+### Usage
+```
+/unmute [user] (reason)
+```
+
+### Options
+- `user` (required) - Member to unmute
+- `reason` (optional) - Reason for unmute
+
+### Features
+
+**Mute Removal:**
+- Restores message permissions
+- Removes voice mute
+- Clears temporary mute timers
+- Updates user records
+
+### Examples
+
+```
+/unmute user:@ReformedUser reason:"Served time, good behavior"
+/unmute user:@MutedMember reason:"Appeal accepted"
+```
+
+### Permissions Required
+- **Moderate Members** - User permission
+- **Moderate Members** - Bot permission
+
+---
+
+## /warn
+
+Issue formal warnings to users with tracking and escalation.
+
+### Usage
+```
+/warn add [user] [reason]
+/warn remove [user] [warning_id]
+/warn list [user]
+/warn clear [user]
+```
+
+### Subcommands
+
+#### add
+Add a warning to a user's record.
+
+**Options:**
+- `user` (required) - Member to warn
+- `reason` (required) - Reason for warning
+
+#### remove
+Remove a specific warning.
+
+**Options:**
+- `user` (required) - Member to remove warning from
+- `warning_id` (required) - ID of warning to remove
+
+#### list
+View all warnings for a user.
+
+**Options:**
+- `user` (required) - Member to check warnings for
+
+#### clear
+Remove all warnings for a user.
+
+**Options:**
+- `user` (required) - Member to clear warnings for
+
+### Warning System Features
+
+**Escalation Levels:**
+- 1st warning: Verbal warning
+- 2nd warning: Temporary mute
+- 3rd warning: Temporary ban
+- 4th warning: Permanent ban
+
+**Warning Records:**
+- Persistent warning history
+- Moderator tracking
+- Timestamp logging
+- Reason documentation
+
+### Examples
+
+```
+/warn add user:@RuleBreaker reason:"Posted NSFW content in general"
+/warn list user:@ProblemUser
+/warn remove user:@ReformedUser warning_id:5
+/warn clear user:@CleanSlate
+```
+
+### Permissions Required
+- **Manage Messages** - User permission
+
+---
+
+## /strike
+
+Advanced user infraction system with automatic punishments.
+
+### Usage
+```
+/strike add [user] [reason] (severity)
+/strike remove [user] [strike_id]
+/strike list [user]
+/strike clear [user]
+/strike config
+```
+
+### Strike System
+
+**Severity Levels:**
+- **Low** (1 point) - Minor infractions
+- **Medium** (3 points) - Moderate violations
+- **High** (5 points) - Severe violations
+- **Critical** (10 points) - Major offenses
+
+**Automatic Punishments:**
+- 3 points: 1 hour mute
+- 6 points: 24 hour mute
+- 10 points: 7 day ban
+- 15 points: Permanent ban
+
+### Subcommands
+
+#### add
+Add a strike to a user.
+
+**Options:**
+- `user` (required) - Member to strike
+- `reason` (required) - Reason for strike
+- `severity` (optional) - Strike severity (low/medium/high/critical)
+
+#### remove
+Remove a specific strike.
+
+**Options:**
+- `user` (required) - Member to remove strike from
+- `strike_id` (required) - ID of strike to remove
+
+#### list
+View all strikes for a user.
+
+**Options:**
+- `user` (required) - Member to check strikes for
+
+#### clear
+Remove all strikes for a user.
+
+**Options:**
+- `user` (required) - Member to clear strikes for
+
+#### config
+Configure strike system settings.
+
+### Examples
+
+```
+/strike add user:@Offender reason:"Harassment" severity:high
+/strike list user:@TroubledUser
+/strike remove user:@ReformedUser strike_id:3
+/strike config
+```
+
+### Permissions Required
+- **Manage Messages** - User permission
+
+---
+
+## /purge
+
+Bulk delete messages with advanced filtering options.
+
+### Usage
+```
+/purge [amount] (user) (filter)
+```
+
+### Options
+- `amount` (required) - Number of messages to delete (1-100)
+- `user` (optional) - Only delete messages from specific user
+- `filter` (optional) - Message type filter
+
+### Filter Types
+
+**Message Filters:**
+- `all` - All messages (default)
+- `bots` - Only bot messages
+- `humans` - Only human messages
+- `images` - Messages with attachments
+- `embeds` - Messages with embeds
+- `links` - Messages with URLs
+
+### Safety Features
+
+**Limitations:**
+- Maximum 100 messages per command
+- Cannot delete messages older than 14 days
+- Requires confirmation for large deletions
+- Logs deletion activity
+
+**Permissions Respected:**
+- Cannot delete messages from higher roles
+- Respects message management permissions
+- Audit log entries created
+
+### Examples
+
+```
+/purge amount:50
+/purge amount:20 user:@SpamBot
+/purge amount:30 filter:images
+/purge amount:10 user:@Troublemaker filter:links
+```
+
+### Permissions Required
+- **Manage Messages** - User permission
+- **Manage Messages** - Bot permission
+
+---
+
+## /role
+
+Manage user roles with advanced assignment options.
+
+### Usage
+```
+/role add [user] [role] (reason)
+/role remove [user] [role] (reason)
+/role list [user]
+/role create [name] (color) (permissions)
+/role delete [role] (reason)
+```
+
+### Subcommands
+
+#### add
+Add a role to a user.
+
+**Options:**
+- `user` (required) - Member to give role to
+- `role` (required) - Role to assign
+- `reason` (optional) - Reason for role assignment
+
+#### remove
+Remove a role from a user.
+
+**Options:**
+- `user` (required) - Member to remove role from
+- `role` (required) - Role to remove
+- `reason` (optional) - Reason for role removal
+
+#### list
+List all roles for a user.
+
+**Options:**
+- `user` (required) - Member to list roles for
+
+#### create
+Create a new role.
+
+**Options:**
+- `name` (required) - Name for the new role
+- `color` (optional) - Role color (hex format)
+- `permissions` (optional) - Role permissions
+
+#### delete
+Delete an existing role.
+
+**Options:**
+- `role` (required) - Role to delete
+- `reason` (optional) - Reason for deletion
+
+### Role Management Features
+
+**Safety Checks:**
+- Role hierarchy respected
+- Cannot assign roles higher than bot's highest role
+- Cannot assign roles higher than user's highest role
+- Permission validation
+
+**Role Creation:**
+- Custom colors (hex format: #ff0000)
+- Permission templates
+- Position management
+- Mentionable settings
+
+### Examples
+
+```
+/role add user:@NewMember role:@Verified reason:"Completed verification"
+/role remove user:@Former role:@Moderator reason:"Resigned from position"
+/role list user:@Someone
+/role create name:"Helper" color:#00ff00
+/role delete role:@UnusedRole reason:"No longer needed"
+```
+
+### Permissions Required
+- **Manage Roles** - User permission
+- **Manage Roles** - Bot permission
+
+---
+
+## /nick
+
+Change user nicknames in the server.
+
+### Usage
+```
+/nick set [user] [nickname] (reason)
+/nick remove [user] (reason)
+```
+
+### Subcommands
+
+#### set
+Set a new nickname for a user.
+
+**Options:**
+- `user` (required) - Member to change nickname for
+- `nickname` (required) - New nickname (1-32 characters)
+- `reason` (optional) - Reason for nickname change
+
+#### remove
+Remove a user's nickname (reset to username).
+
+**Options:**
+- `user` (required) - Member to remove nickname from
+- `reason` (optional) - Reason for nickname removal
+
+### Nickname Rules
+
+**Discord Limitations:**
+- 1-32 characters
+- Cannot be only whitespace
+- Some characters restricted
+- Must follow server rules
+
+**Hierarchy Rules:**
+- Cannot change nicknames of users with higher roles
+- Cannot change server owner's nickname
+- Bot must have "Manage Nicknames" permission
+
+### Examples
+
+```
+/nick set user:@User123 nickname:"Helper John" reason:"Role clarity"
+/nick remove user:@BadNickname reason:"Inappropriate nickname"
+```
+
+### Permissions Required
+- **Manage Nicknames** - User permission
+- **Manage Nicknames** - Bot permission
+
+---
+
+## /softban
+
+Temporarily ban and immediately unban users to clear their messages.
+
+### Usage
+```
+/softban [user] (reason)
+```
+
+### Options
+- `user` (required) - User to softban
+- `reason` (optional) - Reason for softban
+
+### Softban Process
+
+**What Happens:**
+1. User is banned from the server
+2. Their recent messages are deleted (7 days)
+3. User is immediately unbanned
+4. User can rejoin with invite
+
+**Use Cases:**
+- Clear spam messages
+- Remove problematic content
+- Reset user's message history
+- Less severe than permanent ban
+
+### Examples
+
+```
+/softban user:@Spammer reason:"Clear spam messages"
+/softban user:@ToxicUser reason:"Remove toxic content"
+```
+
+### Permissions Required
+- **Ban Members** - User permission
+- **Ban Members** - Bot permission
+
+---
+
+## /unban
+
+Remove bans and allow users to rejoin the server.
+
+### Usage
+```
+/unban [user] (reason)
+```
+
+### Options
+- `user` (required) - User ID or tag to unban
+- `reason` (optional) - Reason for unbanning
+
+### Features
+
+**User Identification:**
+- Unban by user ID
+- Unban by username#discriminator
+- Search banned users list
+
+**Unban Process:**
+- Removes ban from server
+- User can rejoin with invite
+- Logs unban action
+- Updates audit log
+
+### Examples
+
+```
+/unban user:123456789012345678 reason:"Appeal approved"
+/unban user:"FormerMember#1234" reason:"Ban period expired"
+```
+
+### Permissions Required
+- **Ban Members** - User permission
+- **Ban Members** - Bot permission
+
+---
+
+## /deafen
+
+Server deafen users in voice channels.
+
+### Usage
+```
+/deafen [user] (reason)
+```
+
+### Options
+- `user` (required) - Member to deafen
+- `reason` (optional) - Reason for deafening
+
+### Deafen Effects
+
+**What It Does:**
+- User cannot hear others in voice
+- User can still speak (unless also muted)
+- Applied server-wide
+- Persists across channels
+
+### Examples
+
+```
+/deafen user:@LoudUser reason:"Disruptive behavior"
+```
+
+### Permissions Required
+- **Deafen Members** - User permission
+- **Deafen Members** - Bot permission
+
+---
+
+## /undeafen
+
+Remove server deafen from users.
+
+### Usage
+```
+/undeafen [user] (reason)
+```
+
+### Options
+- `user` (required) - Member to undeafen
+- `reason` (optional) - Reason for undeafening
+
+### Examples
+
+```
+/undeafen user:@ReformedUser reason:"Good behavior"
+```
+
+### Permissions Required
+- **Deafen Members** - User permission
+- **Deafen Members** - Bot permission
+
+---
+
+## /disconnect
+
+Disconnect users from voice channels.
+
+### Usage
+```
+/disconnect [user] (reason)
+```
+
+### Options
+- `user` (required) - Member to disconnect
+- `reason` (optional) - Reason for disconnection
+
+### Features
+
+**Disconnect Process:**
+- Immediately removes user from voice channel
+- User must manually rejoin
+- Does not prevent rejoining
+- Logs action for audit trail
+
+### Examples
+
+```
+/disconnect user:@AFKUser reason:"AFK in important meeting"
+/disconnect user:@Disruptive reason:"Inappropriate voice behavior"
+```
+
+### Permissions Required
+- **Move Members** - User permission
+- **Move Members** - Bot permission
+
+---
+
+## /drag
+
+Move users between voice channels.
+
+### Usage
+```
+/drag [user] [channel] (reason)
+```
+
+### Options
+- `user` (required) - Member to move
+- `channel` (required) - Voice channel to move to
+- `reason` (optional) - Reason for moving
+
+### Features
+
+**Voice Channel Management:**
+- Move users to any voice channel
+- Respects channel permissions
+- User must be in voice to move
+- Logs movement action
+
+### Examples
+
+```
+/drag user:@Helper channel:"Staff Meeting" reason:"Staff discussion"
+/drag user:@Member channel:"General Voice" reason:"Wrong channel"
+```
+
+### Permissions Required
+- **Move Members** - User permission
+- **Move Members** - Bot permission
+
+---
+
+## /dragall
+
+Move all users from one voice channel to another.
+
+### Usage
+```
+/dragall [from_channel] [to_channel] (reason)
+```
+
+### Options
+- `from_channel` (required) - Source voice channel
+- `to_channel` (required) - Destination voice channel
+- `reason` (optional) - Reason for mass move
+
+### Features
+
+**Mass Movement:**
+- Moves all users in source channel
+- Respects individual permissions
+- Skips users who cannot join destination
+- Bulk operation logging
+
+### Examples
+
+```
+/dragall from_channel:"General Voice" to_channel:"Event Hall" reason:"Moving to event"
+/dragall from_channel:"AFK" to_channel:"General Voice" reason:"Event starting"
+```
+
+### Permissions Required
+- **Move Members** - User permission
+- **Move Members** - Bot permission
+
+---
+
+## /afk
+
+Manage the AFK (Away From Keyboard) system.
+
+### Usage
+```
+/afk set [message]
+/afk remove
+/afk check [user]
+/afk list
+```
+
+### AFK System Features
+
+**Auto-Detection:**
+- Sets AFK when mentioned while away
+- Returns from AFK when sending message
+- Tracks AFK duration
+- Customizable AFK messages
+
+**AFK Status:**
+- Custom AFK messages
+- Timestamp tracking
+- Mention responses
+- Auto-nickname prefixing
+
+### Subcommands
+
+#### set
+Set your AFK status with a custom message.
+
+**Options:**
+- `message` (required) - AFK message (max 200 characters)
+
+#### remove
+Remove your AFK status.
+
+#### check
+Check if a user is AFK.
+
+**Options:**
+- `user` (required) - User to check AFK status for
+
+#### list
+List all currently AFK users.
+
+### Examples
+
+```
+/afk set message:"Gone for lunch, back in 30 minutes"
+/afk set message:"Sleeping, will respond tomorrow"
+/afk remove
+/afk check user:@SomeUser
+/afk list
+```
+
+### AFK Features
+
+**Automatic Responses:**
+- Responds when AFK users are mentioned
+- Shows AFK message and duration
+- Removes AFK when user returns
+- Logs AFK activity
+
+**Customization:**
+- Custom AFK messages
+- Nickname prefixes ([AFK])
+- Configurable responses
+- Duration tracking
+
+---
+
+## /tag
+
+Create and manage custom tags for quick responses.
+
+### Usage
+```
+/tag create [name] [content]
+/tag edit [name] [content]
+/tag delete [name]
+/tag list
+/tag info [name]
+/tag use [name]
+```
+
+### Tag System
+
+**Features:**
+- Quick response system
+- TagScript support
+- Variable substitution
+- Permission controls
+
+**Tag Variables:**
+- `{user}` - Command user
+- `{user.mention}` - User mention
+- `{guild}` - Server name
+- `{channel}` - Channel name
+- `{args}` - Command arguments
+
+### Subcommands
+
+#### create
+Create a new tag.
+
+**Options:**
+- `name` (required) - Tag name (alphanumeric, 1-32 chars)
+- `content` (required) - Tag content (max 2000 chars)
+
+#### edit
+Edit an existing tag.
+
+**Options:**
+- `name` (required) - Tag name to edit
+- `content` (required) - New tag content
+
+#### delete
+Delete a tag.
+
+**Options:**
+- `name` (required) - Tag name to delete
+
+#### list
+List all server tags.
+
+#### info
+Get information about a tag.
+
+**Options:**
+- `name` (required) - Tag name to get info for
+
+#### use
+Use a tag (send its content).
+
+**Options:**
+- `name` (required) - Tag name to use
+
+### TagScript Support
+
+Tags support advanced TagScript features:
+
+```tagscript
+{require(role_id):You need a specific role!}
+Hello {user}! Welcome to {guild}.
+{if({args}):
+  Your arguments: {args}
+|:
+  No arguments provided.
+}
+```
+
+### Examples
+
+```
+/tag create name:"rules" content:"Please read our rules in #rules channel!"
+/tag create name:"welcome" content:"Welcome {user.mention} to {guild}! 🎉"
+/tag use name:"rules"
+/tag list
+/tag delete name:"outdated"
+```
+
+### Permissions Required
+- **Manage Messages** - To create/edit/delete tags
+- **Send Messages** - To use tags
+
+---
+
+## /trigger
+
+Set up automated responses to specific words or phrases.
+
+### Usage
+```
+/trigger create [keyword] [response] (match_type)
+/trigger edit [id] [response]
+/trigger delete [id]
+/trigger list
+/trigger toggle [id]
+```
+
+### Trigger System
+
+**Match Types:**
+- **Exact** - Exact word match
+- **Contains** - If message contains keyword
+- **Starts** - If message starts with keyword
+- **Ends** - If message ends with keyword
+- **Regex** - Regular expression pattern
+
+**Response Types:**
+- Text responses
+- Embed responses
+- TagScript responses
+- Auto-reactions
+
+### Subcommands
+
+#### create
+Create a new trigger.
+
+**Options:**
+- `keyword` (required) - Word/phrase to trigger on
+- `response` (required) - Response content
+- `match_type` (optional) - How to match the keyword
+
+#### edit
+Edit a trigger's response.
+
+**Options:**
+- `id` (required) - Trigger ID to edit
+- `response` (required) - New response content
+
+#### delete
+Delete a trigger.
+
+**Options:**
+- `id` (required) - Trigger ID to delete
+
+#### list
+List all server triggers.
+
+#### toggle
+Enable/disable a trigger.
+
+**Options:**
+- `id` (required) - Trigger ID to toggle
+
+### Advanced Features
+
+**TagScript Integration:**
+```tagscript
+{user.mention}, you said "{args}".
+{if({user.roles.has(role_id)}):
+  Special response for role members!
+|:
+  Standard response.
+}
+```
+
+**Auto-Moderation:**
+- Delete trigger messages
+- Add reactions
+- Timeout users
+- Send warnings
+
+### Examples
+
+```
+/trigger create keyword:"hello" response:"Hello there! 👋" match_type:exact
+/trigger create keyword:"bot" response:"Yes, I'm a bot! How can I help?" match_type:contains
+/trigger list
+/trigger toggle id:5
+/trigger delete id:3
+```
+
+### Permissions Required
+- **Manage Messages** - To create/edit triggers
+- **Administrator** - For advanced trigger features
