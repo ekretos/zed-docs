@@ -1,5 +1,4 @@
 import Image from "next/image"
-import { format } from 'date-fns';
 
 export default {
   logo: <>
@@ -13,7 +12,8 @@ export default {
     link: 'https://github.com/ekretos/zed-docs'
   },
   logoLink: '/',
-  docsRepositoryBase: 'https://github.com/ekretos/zed-docs/blob/main/',
+  // Remove docsRepositoryBase to prevent Git integration
+  // docsRepositoryBase: 'https://github.com/ekretos/zed-docs/blob/main/',
   head: (
     <>
       <link rel="icon" href="favicon.ico" type="image/x-icon"></link>
@@ -28,7 +28,7 @@ export default {
     }
   },
 
-  // Disable Git timestamp to avoid native binding issues
+  // Completely disable Git timestamp to avoid native binding issues
   gitTimestamp: false,
 
   // banner: {

@@ -4,7 +4,7 @@
 	"description": "Documentation for ZeroDegree - Ultimate Anti-Nuke Bot",
 	"scripts": {
 		"dev": "next dev",
-		"build": "next build",
+		"build": "next build && next export",
 		"start": "next start",
 		"export": "next export"
 	},
@@ -23,6 +23,14 @@
 		"react": "^18.3.1",
 		"react-dom": "^18.3.1",
 		"tailwindcss": "^4.1.11"
+	},
+	"resolutions": {
+		"@napi-rs/simple-git": "false"
+	},
+	"pnpm": {
+		"overrides": {
+			"@napi-rs/simple-git": "false"
+		}
 	},
 	"engines": {
 		"node": ">=18.0.0"

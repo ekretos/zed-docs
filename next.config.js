@@ -1,31 +1,64 @@
 const withNextra = require('nextra')({
   theme: 'nextra-theme-docs',
   themeConfig: './theme.config.jsx',
-  // Disable Git integration to avoid native binding issues
+  // Completely disable all Git-related features
   gitTimestamp: false,
-  readingTime: false
+  readingTime: false,
+  // Disable Git integration entirely
+  gitRepo: false,
+  gitBranch: false
 })
 
 module.exports = withNextra({
-  // Webpack configuration to handle potential native module issues
+  // Environment variables to disable Git features
+  env: {
+    NEXTRA_GIT_INTEGRATION: 'false',
+    NEXTRA_DISABLE_GIT: 'true'
+  },
+  // Webpack configuration to handle module resolution issues
   webpack: (config, { isServer }) => {
+    // Ignore problematic packages during build
+    config.externals = config.externals || [];
+    if (isServer) {
+      config.externals.push('@napi-rs/simple-git');
+    }
+
+    // Add resolve fallbacks for client-side
     if (!isServer) {
       config.resolve.fallback = {
         ...config.resolve.fallback,
         fs: false,
         path: false,
-        os: false
+        os: false,
+        child_process: false,
+        '@napi-rs/simple-git': false
       };
     }
+
+    // Ignore optional dependencies that cause issues
+    config.plugins = config.plugins || [];
+    config.plugins.push(
+      new config.webpack.IgnorePlugin({
+        resourceRegExp: /@napi-rs\/simple-git/
+      })
+    );
+
     return config;
   },
-  // Disable source maps in production to reduce build size
+  // Disable source maps in production
   productionBrowserSourceMaps: false,
-  // Optimize builds
+  // Use SWC minification
   swcMinify: true,
-  // Transpile packages that might have issues
+  // Configure module transpilation
   transpilePackages: ['nextra', 'nextra-theme-docs'],
+  // Experimental features for better compatibility
   experimental: {
     esmExternals: 'loose'
+  },
+  // Output configuration for static export
+  output: 'export',
+  trailingSlash: true,
+  images: {
+    unoptimized: true
   }
 })

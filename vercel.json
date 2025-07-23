@@ -1,0 +1,20 @@
+{
+    "version": 2,
+    "builds": [
+        {
+            "src": "package.json",
+            "use": "@vercel/static-build",
+            "config": {
+                "distDir": "out"
+            }
+        }
+    ],
+    "buildCommand": "npm run build",
+    "outputDirectory": "out",
+    "installCommand": "npm install --legacy-peer-deps",
+    "env": {
+        "NEXTRA_GIT_INTEGRATION": "false",
+        "NEXTRA_DISABLE_GIT": "true",
+        "NODE_OPTIONS": "--max-old-space-size=4096"
+    }
+}
