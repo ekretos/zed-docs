@@ -3,7 +3,11 @@ node_modules
 .git
 *.log
 package-lock.json
+pnpm-lock.yaml
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
+# Ignore problematic native modules
+**/simple-git*
+**/@napi-rs/**
