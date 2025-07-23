@@ -3,26 +3,18 @@ const withNextra = require('nextra')({
   themeConfig: './theme.config.jsx',
   // Completely disable all Git-related features
   gitTimestamp: false,
-  readingTime: false,
-  // Disable Git integration entirely
-  gitRepo: false,
-  gitBranch: false
+  readingTime: false
 })
 
 module.exports = withNextra({
-  // Environment variables to disable Git features
-  env: {
-    NEXTRA_GIT_INTEGRATION: 'false',
-    NEXTRA_DISABLE_GIT: 'true'
-  },
   // Webpack configuration to handle module resolution issues
-  webpack: (config, { isServer }) => {
+  webpack: (config, { isServer, webpack }) => {
     // Ignore problematic packages during build
     config.externals = config.externals || [];
     if (isServer) {
       config.externals.push('@napi-rs/simple-git');
     }
-
+    
     // Add resolve fallbacks for client-side
     if (!isServer) {
       config.resolve.fallback = {
@@ -30,19 +22,18 @@ module.exports = withNextra({
         fs: false,
         path: false,
         os: false,
-        child_process: false,
-        '@napi-rs/simple-git': false
+        child_process: false
       };
     }
-
+    
     // Ignore optional dependencies that cause issues
     config.plugins = config.plugins || [];
     config.plugins.push(
-      new config.webpack.IgnorePlugin({
+      new webpack.IgnorePlugin({
         resourceRegExp: /@napi-rs\/simple-git/
       })
     );
-
+    
     return config;
   },
   // Disable source maps in production
@@ -54,11 +45,5 @@ module.exports = withNextra({
   // Experimental features for better compatibility
   experimental: {
     esmExternals: 'loose'
-  },
-  // Output configuration for static export
-  output: 'export',
-  trailingSlash: true,
-  images: {
-    unoptimized: true
   }
 })
