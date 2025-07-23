@@ -14,7 +14,7 @@ module.exports = withNextra({
     if (isServer) {
       config.externals.push('@napi-rs/simple-git');
     }
-    
+
     // Add resolve fallbacks for client-side
     if (!isServer) {
       config.resolve.fallback = {
@@ -25,7 +25,7 @@ module.exports = withNextra({
         child_process: false
       };
     }
-    
+
     // Ignore optional dependencies that cause issues
     config.plugins = config.plugins || [];
     config.plugins.push(
@@ -33,7 +33,7 @@ module.exports = withNextra({
         resourceRegExp: /@napi-rs\/simple-git/
       })
     );
-    
+
     return config;
   },
   // Disable source maps in production
