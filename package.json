@@ -1,18 +1,31 @@
 {
+	"name": "zerodegree-docs",
+	"version": "1.0.0",
+	"description": "Documentation for ZeroDegree - Ultimate Anti-Nuke Bot",
 	"scripts": {
-		"dev": "next",
+		"dev": "next dev",
 		"build": "next build",
-		"start": "next start"
+		"start": "next start",
+		"export": "next export"
 	},
 	"dependencies": {
+		"@headlessui/react": "^2.2.5",
+		"@heroicons/react": "^2.2.0",
+		"@vercel/analytics": "^1.5.0",
 		"autoprefixer": "^10.4.21",
+		"clsx": "^2.1.1",
 		"date-fns": "^3.6.0",
+		"focus-visible": "5.2.0",
 		"lucide-react": "^0.331.0",
 		"next": "^14.2.30",
 		"nextra": "^2.13.4",
 		"nextra-theme-docs": "^2.13.4",
 		"react": "^18.3.1",
-		"react-dom": "^18.3.1"
+		"react-dom": "^18.3.1",
+		"tailwindcss": "^4.1.11"
+	},
+	"engines": {
+		"node": ">=18.0.0"
 	},
 	"packageManager": "pnpm@10.13.1+sha512.37ebf1a5c7a30d5fabe0c5df44ee8da4c965ca0c5af3dbab28c3a1681b70a256218d05c81c9c0dcf767ef6b8551eb5b960042b9ed4300c59242336377e01cfad"
 }

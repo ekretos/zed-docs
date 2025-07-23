@@ -28,10 +28,8 @@ export default {
     }
   },
 
-  gitTimestamp: ({ timestamp }) => {
-    const formattedDate = format(new Date(timestamp), 'MMMM dd, yyyy');
-    return <span>Last Updated: {formattedDate}</span>;
-  },
+  // Disable Git timestamp to avoid native binding issues
+  gitTimestamp: false,
 
   // banner: {
   //   key: 'Note',
