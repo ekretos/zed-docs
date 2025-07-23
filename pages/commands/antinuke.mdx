@@ -1,0 +1,688 @@
+# Anti-Nuke Protection
+
+Advanced protection system against malicious actions and server nuking attempts.
+
+## Overview
+
+The Anti-Nuke system provides comprehensive protection against various types of attacks and unauthorized actions that could harm your server. It monitors and prevents mass actions like bans, channel deletions, and role modifications.
+
+## Features
+
+- **Real-time monitoring** of administrative actions
+- **Instant threat detection** and response
+- **Automatic rollback** of malicious changes
+- **Customizable protection** thresholds
+- **Detailed logging** of security events
+
+## Basic Commands
+
+### `/enable` - Enable the Anti-Nuke system
+
+Activates ZeroDegree's comprehensive anti-nuke protection for your server.
+
+**Usage:**
+```
+/enable
+```
+
+**What happens when enabled:**
+- Starts real-time monitoring of all administrative actions
+- Activates threat detection algorithms
+- Begins automatic response protocols
+- Initializes audit log integration
+- Enables whitelist checking system
+
+**Protected Actions:**
+- Channel creation/deletion (monitors for mass operations)
+- Role creation/deletion/modification (prevents privilege escalation)
+- Member bans/kicks (detects mass moderation abuse)
+- Webhook creation/deletion (prevents unauthorized bot integration)
+- Server settings changes (monitors critical configuration changes)
+- Permission modifications (detects dangerous permission grants)
+
+**Detection Thresholds:**
+- 3+ channels deleted within 30 seconds
+- 5+ roles created/deleted within 60 seconds
+- 3+ members banned within 30 seconds
+- 2+ webhooks created within 15 seconds
+- Mass permission changes affecting 5+ users
+
+**Permissions Required:**
+- Administrator permission in the server
+- Bot must have necessary permissions to take protective actions
+
+---
+
+### `/disable` - Disable the Anti-Nuke system
+
+Temporarily deactivates anti-nuke protection for maintenance or specific operations.
+
+**Usage:**
+```
+/disable
+```
+
+**What happens when disabled:**
+- Stops all monitoring systems
+- Deactivates automatic responses
+- Pauses threat detection
+- Maintains configuration settings for re-enabling
+- Logs the disable action for audit purposes
+
+**When to use:**
+- Server reorganization or mass changes by administrators
+- Bot maintenance or updates
+- Resolving conflicts with other security bots
+- Temporary suspension for specific events
+
+**⚠️ Security Warning:**
+Disabling anti-nuke removes protection against:
+- Mass deletion attacks
+- Permission escalation attempts
+- Unauthorized webhook creation
+- Malicious bot actions
+- Coordinated server raids
+
+**Permissions Required:**
+- Administrator permission in the server
+
+---
+
+### `/antinuke channel` - Set up logging channel for Anti-Nuke actions
+
+Configures where anti-nuke events, alerts, and actions are logged.
+
+**Usage:**
+```
+/antinuke channel #channel-name
+```
+
+**Parameters:**
+- `channel` (required) - Text channel where logs will be sent
+
+**Log Information Included:**
+- **Triggered Events:** Detailed information about detected threats
+- **Actions Taken:** What protective measures were executed
+- **User Information:** Who triggered the anti-nuke system
+- **Timestamp Data:** Exact time and duration of events
+- **Whitelist Status:** Whether the user was whitelisted
+- **Recovery Actions:** Any automatic rollback operations performed
+- **System Status:** Health and performance metrics
+
+**Log Message Format:**
+```
+🛡️ ANTI-NUKE TRIGGERED
+User: @Username (123456789)
+Action: Mass Channel Deletion
+Detected: 5 channels deleted in 15 seconds
+Response: User banned, attempting channel recovery
+Whitelist: Not whitelisted
+Time: 2025-01-15 14:30:25 UTC
+```
+
+**Best Practices:**
+- Use a dedicated channel for anti-nuke logs
+- Restrict channel access to administrators only
+- Enable message notifications for immediate alerts
+- Regular log review for security auditing
+
+**Permissions Required:**
+- Administrator permission in the server
+- Bot must have send message permissions in the target channel
+
+---
+
+## Whitelist Management
+
+The whitelist system allows you to manage trusted users who are exempt from anti-nuke restrictions. This is particularly useful for server administrators and trusted moderators who need to perform bulk actions without triggering the anti-nuke protection.
+
+**Whitelist Benefits:**
+- Prevents false positives for legitimate administrators
+- Allows trusted users to perform necessary mass actions
+- Maintains security while enabling operational flexibility
+- Provides granular control over who can bypass protection
+- Logs all whitelisted actions for audit purposes
+
+**Security Considerations:**
+- Only whitelist users you completely trust
+- Regularly review and update the whitelist
+- Remove users who no longer need elevated access
+- Monitor whitelisted user activities
+- Use temporary whitelist for short-term needs
+
+### Whitelist Commands (Slash)
+
+#### `/whitelist add` - Add users to whitelist
+
+Grants a user exemption from anti-nuke restrictions.
+
+**Usage:**
+```
+/whitelist add @user [reason]
+```
+
+**Parameters:**
+- `user` (required) - The user to add to the whitelist
+- `reason` (optional) - Explanation for why the user is being whitelisted
+
+**What gets whitelisted:**
+- Mass channel operations (create/delete/modify)
+- Bulk role management (create/delete/assign)
+- Webhook operations (create/delete/configure)
+- Permission modifications (role permissions, channel overrides)
+- Member management actions (mass bans/kicks if authorized)
+
+**Example:**
+```
+/whitelist add @AdminUser Server administrator with full permissions
+```
+
+**Automatic logging includes:**
+- Who added the user to whitelist
+- Timestamp of addition
+- Reason provided
+- User's current roles and permissions
+
+---
+
+#### `/whitelist remove` - Remove users from whitelist
+
+Removes a user's exemption from anti-nuke restrictions.
+
+**Usage:**
+```
+/whitelist remove @user [reason]
+```
+
+**Parameters:**
+- `user` (required) - The user to remove from the whitelist
+- `reason` (optional) - Explanation for the removal
+
+**When to remove users:**
+- User no longer has administrative responsibilities
+- Security concerns about the user's account
+- User has left the staff team
+- Regular security audit cleanup
+- User requested removal
+
+**Example:**
+```
+/whitelist remove @FormerMod User is no longer a moderator
+```
+
+---
+
+#### `/whitelist owner` - Add/Edit owners in whitelist
+
+Manages server owners and co-owners with special whitelist privileges.
+
+**Usage:**
+```
+/whitelist owner @user [add/remove]
+```
+
+**Owner Privileges:**
+- Bypass all anti-nuke restrictions
+- Cannot be removed from whitelist by other users
+- Automatic whitelist status
+- Special logging designation
+- Enhanced audit trail
+
+**Security Features:**
+- Only server owner can modify owner whitelist
+- Changes require additional confirmation
+- All modifications are heavily logged
+- Cannot accidentally remove actual server owner
+
+---
+
+#### `/whitelist show` - Display whitelist data
+
+Shows comprehensive information about all whitelisted users.
+
+**Usage:**
+```
+/whitelist show
+```
+
+**Information Displayed:**
+- User names and Discord IDs
+- Date and time added to whitelist
+- Who added them to the whitelist
+- Reason for whitelisting
+- Last activity date
+- Current role status
+- Number of actions performed while whitelisted
+
+**Whitelist Statistics:**
+- Total whitelisted users
+- Most active whitelisted user
+- Recent whitelist changes
+- Security events involving whitelisted users
+
+---
+
+#### `/whitelist action` - Configure antinuke actions for users
+
+Sets specific anti-nuke responses for individual users or situations.
+
+**Usage:**
+```
+/whitelist action @user [action_type]
+```
+
+**Action Types:**
+- `monitor` - Log actions but don't take protective measures
+- `warn` - Send warnings for suspicious activity
+- `restrict` - Limit certain permissions temporarily
+- `standard` - Apply normal anti-nuke responses
+
+**Custom Configurations:**
+- Per-user action thresholds
+- Specific permission restrictions
+- Time-limited whitelist status
+- Conditional bypass rules
+
+### Whitelist Commands (Prefix)
+
+All slash commands have equivalent prefix versions using your server's prefix:
+
+#### `{p}whitelist add` - Add users to whitelist
+
+**Usage:**
+```
+!whitelist add @user [reason]
+z.whitelist add @AdminUser Server administrator
+```
+
+#### `{p}whitelist remove` - Remove users from whitelist
+
+**Usage:**
+```
+!whitelist remove @user [reason]
+z.whitelist remove @FormerStaff No longer on team
+```
+
+#### `{p}whitelist owner` - Add/Edit owners in whitelist
+
+**Usage:**
+```
+!whitelist owner @user add
+z.whitelist owner @CoOwner add
+```
+
+#### `{p}whitelist show` - Display whitelist data
+
+**Usage:**
+```
+!whitelist show
+z.whitelist show
+```
+
+#### `{p}whitelist action` - Configure antinuke actions for users
+
+**Usage:**
+```
+!whitelist action @user monitor
+z.whitelist action @TrustedBot warn
+```
+
+**Note:** Replace `{p}` with your server's actual prefix (e.g., `!`, `z.`, `>`, etc.)
+
+## Quick Start
+
+Get started with ZeroDegree's anti-nuke protection in just a few minutes with these essential setup steps.
+
+### Step 1: Enable Anti-Nuke Protection
+
+First, activate the system to begin protecting your server:
+
+```
+/enable
+```
+
+**What happens immediately:**
+- Real-time monitoring begins
+- Threat detection activates
+- Automatic protection protocols start
+- Audit logging initializes
+- Whitelist system becomes active
+
+### Step 2: Configure Logging Channel
+
+Set up a dedicated channel for anti-nuke alerts and logs:
+
+```
+/antinuke channel #anti-nuke-logs
+```
+
+**Channel Setup Recommendations:**
+- Create a staff-only channel
+- Name it clearly (e.g., #security-logs, #anti-nuke-alerts)
+- Restrict view access to administrators only
+- Enable notifications for immediate awareness
+- Pin important security information
+
+### Step 3: Whitelist Trusted Users
+
+Add your administrators and trusted moderators to prevent false positives:
+
+```
+/whitelist add @AdminUser Server administrator
+/whitelist add @TrustedMod Head moderator - event management
+/whitelist add @BotManager Bot configuration specialist
+```
+
+**Who to whitelist immediately:**
+- Server owner and co-owners
+- Head administrators
+- Senior moderators with mass action needs
+- Bot managers who configure server automation
+- Event coordinators who need bulk permissions
+
+### Step 4: Test the System
+
+Perform a safe test to ensure everything is working:
+
+```
+/whitelist show
+```
+
+**Verification checklist:**
+- ✅ Anti-nuke system shows as enabled
+- ✅ Logging channel receives test messages
+- ✅ Whitelisted users appear in the list
+- ✅ Bot has necessary permissions
+- ✅ Staff members can access logs
+
+### Step 5: Monitor Initial Activity
+
+Watch the logs for the first few hours to ensure proper operation:
+
+**What to look for:**
+- Normal administrative actions being logged
+- No false positive triggers for legitimate activity
+- Whitelisted users bypassing restrictions properly
+- System responding to any test threats
+- Performance remaining stable
+
+### Common Initial Setup Issues
+
+**Problem:** Anti-nuke not responding to threats
+**Solution:** 
+- Verify bot has Administrator permission
+- Check if bot is higher in role hierarchy than potential threats
+- Ensure bot can manage roles, channels, and members
+
+**Problem:** Too many false positives
+**Solution:**
+- Add more trusted users to whitelist
+- Review detection thresholds in advanced configuration
+- Consider if any legitimate bulk operations are happening
+
+**Problem:** Missing log messages
+**Solution:**
+- Verify bot can send messages in the log channel
+- Check channel permissions for the bot
+- Ensure channel isn't set to slow mode
+
+---
+
+## Advanced Configuration
+
+Fine-tune ZeroDegree's anti-nuke system to match your server's specific needs and security requirements.
+
+### Detection Sensitivity Settings
+
+Customize how sensitive the anti-nuke system is to potential threats:
+
+#### High Sensitivity (Recommended for most servers)
+- Triggers on 2+ suspicious actions within 20 seconds
+- Immediate response with minimal tolerance
+- Best for servers with stable, known staff
+- Lowest chance of successful attacks
+
+#### Medium Sensitivity (Balanced approach)
+- Triggers on 3+ suspicious actions within 30 seconds
+- Moderate response time with some tolerance
+- Good for servers with varied activity levels
+- Balance between security and usability
+
+#### Low Sensitivity (Large servers only)
+- Triggers on 5+ suspicious actions within 45 seconds
+- Delayed response with higher tolerance
+- For servers with frequent legitimate mass actions
+- Higher risk but fewer false positives
+
+### Custom Threshold Configuration
+
+#### Channel Protection Thresholds
+```
+/config antinuke channels delete_limit:3 time_window:30
+/config antinuke channels create_limit:5 time_window:60
+```
+
+**Parameters:**
+- `delete_limit` - Number of channels that can be deleted before triggering
+- `create_limit` - Number of channels that can be created before triggering
+- `time_window` - Time period in seconds for counting actions
+
+#### Role Protection Thresholds
+```
+/config antinuke roles delete_limit:3 time_window:30
+/config antinuke roles create_limit:5 time_window:60
+/config antinuke roles modify_limit:10 time_window:120
+```
+
+**Advanced Role Settings:**
+- `dangerous_permissions` - Monitor for admin/manage_guild grants
+- `mass_assignment` - Detect bulk role assignments
+- `permission_escalation` - Watch for privilege increases
+
+#### Member Action Thresholds
+```
+/config antinuke members ban_limit:3 time_window:30
+/config antinuke members kick_limit:5 time_window:60
+```
+
+### Response Action Configuration
+
+#### Punishment Levels
+
+**Level 1: Monitoring Only**
+- Log all suspicious activity
+- Send alerts to administrators
+- No automatic punishment
+- Good for testing and observation
+
+**Level 2: Temporary Restrictions**
+- Remove dangerous permissions temporarily
+- Mute user for specified duration
+- Require manual review for restoration
+- Reversible actions only
+
+**Level 3: Immediate Removal**
+- Instantly kick the offending user
+- Remove all roles and permissions
+- Allow potential return with approval
+- Standard response level
+
+**Level 4: Permanent Ban**
+- Immediately ban the user from server
+- Maximum security response
+- Requires manual intervention to reverse
+- For zero-tolerance servers
+
+#### Custom Response Actions
+
+Configure specific responses for different types of threats:
+
+```
+/config antinuke response channel_mass_delete:ban
+/config antinuke response role_escalation:kick
+/config antinuke response webhook_spam:restrict
+```
+
+### Recovery and Rollback Features
+
+#### Automatic Recovery Options
+
+**Channel Recovery:**
+- Restore deleted channels with original permissions
+- Recreate channel structure and settings
+- Restore previous message history (if available)
+- Maintain category organization
+
+**Role Recovery:**
+- Recreate deleted roles with original permissions
+- Restore role hierarchy and positioning
+- Reassign roles to previously assigned members
+- Maintain role colors and settings
+
+**Permission Recovery:**
+- Rollback dangerous permission changes
+- Restore previous permission states
+- Remove unauthorized permission grants
+- Reset channel permission overrides
+
+#### Manual Recovery Tools
+
+```
+/recovery channels restore [backup_id]
+/recovery roles restore [backup_id]
+/recovery permissions rollback [timestamp]
+```
+
+### Integration with Other Security Systems
+
+#### Discord Audit Log Integration
+- Cross-reference with Discord's built-in audit logs
+- Enhanced detection through multiple data sources
+- Verification of anti-nuke actions
+- Complete activity timeline
+
+#### External Security Bot Coordination
+- Prevent conflicts with other security bots
+- Share whitelist information across systems
+- Coordinate response actions
+- Avoid duplicate punishments
+
+#### Webhook and API Integration
+- Send alerts to external monitoring systems
+- Integrate with server management dashboards
+- Custom notification endpoints
+- Real-time security feeds
+
+### Performance Optimization
+
+#### Server Load Management
+- Optimize detection algorithms for server size
+- Balance security with performance
+- Adjust monitoring frequency based on activity
+- Resource usage optimization
+
+#### Database and Storage
+- Efficient log storage and retrieval
+- Automated cleanup of old data
+- Backup creation and management
+- Performance monitoring tools
+
+### Advanced Whitelist Features
+
+#### Temporary Whitelist
+```
+/whitelist temp @user duration:2h reason:"Event setup"
+```
+
+Create time-limited whitelist entries for specific needs:
+- Automatic expiration
+- Event-specific permissions
+- Project-based access
+- Temporary elevated privileges
+
+#### Conditional Whitelist
+```
+/whitelist condition @user role:"Event Coordinator" actions:"channel_create,channel_delete"
+```
+
+Set whitelist rules based on conditions:
+- Role-based whitelisting
+- Channel-specific bypass
+- Action-type restrictions
+- Time-based limitations
+
+#### Whitelist Inheritance
+- Role-based automatic whitelisting
+- Permission level requirements
+- Hierarchical whitelist structure
+- Dynamic whitelist updates
+
+### Monitoring and Analytics
+
+#### Security Dashboard
+- Real-time threat monitoring
+- Historical attack data
+- Performance metrics
+- User activity analytics
+
+#### Reporting Features
+- Daily/weekly security reports
+- Threat trend analysis
+- Whitelist usage statistics
+- System performance data
+
+#### Alert Customization
+- Custom alert triggers
+- Notification preferences
+- Escalation procedures
+- Multi-channel alerting
+
+### Troubleshooting and Support
+
+#### Common Configuration Issues
+
+**Issue: System too sensitive**
+**Solutions:**
+1. Increase detection thresholds
+2. Add more users to whitelist
+3. Adjust time windows for actions
+4. Review legitimate bulk operations
+
+**Issue: System not detecting threats**
+**Solutions:**
+1. Verify bot permissions
+2. Check role hierarchy positioning
+3. Review detection settings
+4. Test with safe threat simulation
+
+**Issue: Performance impact**
+**Solutions:**
+1. Optimize detection frequency
+2. Adjust monitoring scope
+3. Clean up old log data
+4. Review server resource allocation
+
+#### Advanced Diagnostics
+
+```
+/antinuke diagnostics full
+/antinuke performance check
+/antinuke test simulate_threat:channel_delete
+```
+
+**Diagnostic Information:**
+- System health status
+- Performance metrics
+- Configuration validation
+- Permission verification
+- Integration status checks
+
+#### Support Resources
+
+- Detailed error logging and reporting
+- Direct support ticket integration
+- Community troubleshooting guides
+- Video configuration tutorials
+- Live chat support for premium users
+
+This comprehensive configuration system ensures that ZeroDegree's anti-nuke protection can be perfectly tailored to your server's specific security needs while maintaining optimal performance and usability.

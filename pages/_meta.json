@@ -1,0 +1,13 @@
+{
+  "index": "Getting Started",
+  "commands": "Commands",
+  "features": "Features",
+  "config": "Configuration",
+  "guides": "Guides",
+  "website": {
+    "title": "Website",
+    "type": "page",
+    "href": "https://zedbot.xyz",
+    "newWindow": true
+  }
+}
